@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/pages/gamepage.dart';
 import 'package:skippingfrog_mobile/pages/helppage.dart';
+import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
 import 'package:skippingfrog_mobile/pages/optionspage.dart';
 import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
 import 'package:skippingfrog_mobile/pages/skippingfrogsplash.dart';
+import 'package:skippingfrog_mobile/services/gameservice.dart';
 
 void main() {
-  runApp(const SkippingFrogApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => GameService()
+        )
+      ],
+      child: const SkippingFrogApp(),
+    )
+  );
 }
 
 class SkippingFrogApp extends StatelessWidget {
@@ -23,6 +35,7 @@ class SkippingFrogApp extends StatelessWidget {
         HelpPage.route: (context) => const HelpPage(),
         OptionsPage.route: (context) => const OptionsPage(),
         GamePage.route: (context) => const GamePage(),
+        LeaderboardsPage.route: (context) => const LeaderboardsPage()
       },
     );
   }

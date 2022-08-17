@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
-class HelpPage extends StatelessWidget {
+class LeaderboardsPage extends StatelessWidget {
 
-  static String route = '/help';
-  
-  const HelpPage({Key? key}) : super(key: key);
+  static String route = '/leaderboard';
+
+  const LeaderboardsPage({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +22,9 @@ class HelpPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(
-                  width: 150,
-                  child: Image.asset('assets/imgs/help_title.png',
-                    width: 150,
-                    height: 100,
-                    fit: BoxFit.contain
-                  ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40, top: 10, right: 40),
+                  child: Image.asset('assets/imgs/leaderboards_title.png'),
                 ),
                 const Spacer(),
                 Row(

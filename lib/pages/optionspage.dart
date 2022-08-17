@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/difficulty.dart';
+import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
+import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class OptionsPage extends StatelessWidget {
@@ -38,29 +42,35 @@ class OptionsPage extends StatelessWidget {
                           Center(
                             child: Container(
                               margin: const EdgeInsets.only(top: 120),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SkippingFrogButton(
-                                    toggle: true,
-                                    width: 180,
-                                    height: 100,
-                                    on: 'btn_easy_on',
-                                    off: 'btn_easy_off',
-                                    onTap: () {
-                                    }
-                                  ),
-                                  SkippingFrogButton(
-                                    toggle: true,
-                                    width: 180,
-                                    height: 100,
-                                    on: 'btn_hard_on',
-                                    off: 'btn_hard_off',
-                                    onTap: () {
-                                    }
-                                  ),
-                                ],
+                              child: Consumer<GameService>(
+                                builder: (context, gameService, child) {
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SkippingFrogButton(
+                                        toggle: gameService.difficulty == Difficulty.easy,
+                                        width: 180,
+                                        height: 100,
+                                        on: 'btn_easy_on',
+                                        off: 'btn_easy_off',
+                                        onTap: () {
+                                          gameService.setGameDifficulty(Difficulty.easy);
+                                        }
+                                      ),
+                                      SkippingFrogButton(
+                                        toggle: gameService.difficulty == Difficulty.hard,
+                                        width: 180,
+                                        height: 100,
+                                        on: 'btn_hard_on',
+                                        off: 'btn_hard_off',
+                                        onTap: () {
+                                          gameService.setGameDifficulty(Difficulty.hard);
+                                        }
+                                      ),
+                                    ],
+                                  );
+                                }
                               ),
                             ),
                           )
@@ -72,6 +82,7 @@ class OptionsPage extends StatelessWidget {
                         on: 'btn_viewlb_on',
                         off: 'btn_viewlb_off',
                         onTap: () {
+                          Navigator.of(context).pushNamed(LeaderboardsPage.route);
                         }
                       )
                     ]
@@ -82,7 +93,7 @@ class OptionsPage extends StatelessWidget {
                   children: [
                     SkippingFrogButton(
                       width: 180,
-                      height: 180,
+                      height: 100,
                       on: 'btn_back_on',
                       off: 'btn_back_off',
                       onTap: () {

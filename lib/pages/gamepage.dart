@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:skippingfrog_mobile/helpers/appcolors.dart';
+import 'package:skippingfrog_mobile/helpers/skipping_frog_font_icons.dart';
+import 'package:skippingfrog_mobile/widgets/gameheaderpanel.dart';
 
 class GamePage extends StatelessWidget {
 
@@ -9,7 +12,20 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('hello')
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset('assets/imgs/water_bg.png',
+              fit: BoxFit.fitHeight
+            ),
+          ),
+          const GameHeaderPanel(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Image.asset('assets/imgs/bottom_panel.png')
+          )
+        ]
+      )
     );
   }
 }
