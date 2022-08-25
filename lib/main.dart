@@ -6,14 +6,22 @@ import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
 import 'package:skippingfrog_mobile/pages/optionspage.dart';
 import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
 import 'package:skippingfrog_mobile/pages/skippingfrogsplash.dart';
+import 'package:skippingfrog_mobile/services/difficultyservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
+import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        Provider(
           create: (_) => GameService()
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DifficultyService()
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SwipingGestureService()
         )
       ],
       child: const SkippingFrogApp(),
@@ -26,7 +34,18 @@ class SkippingFrogApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Dimitri'
+      ),
+      builder: (BuildContext context, Widget? child) {
+
+        // initialize the game service
+        GameService gameService = Provider.of<GameService>(context, listen: false);
+        gameService.initGame(context);
+        return child!;
+      },
       debugShowCheckedModeBanner: false,
       initialRoute: SkippingFrogAppSplash.route,
       routes: {

@@ -29,7 +29,7 @@ class GameHeaderPanel extends StatelessWidget {
                       Text('3', style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 30
+                        fontSize: 35
                       ))
                     ],
                   ),
@@ -40,7 +40,7 @@ class GameHeaderPanel extends StatelessWidget {
                       Text('20', style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 30
+                        fontSize: 35
                       ))
                     ],
                   ),
@@ -54,7 +54,7 @@ class GameHeaderPanel extends StatelessWidget {
                           Text('00:00:00', style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 16
+                            fontSize: 20
                           )),
                           const SizedBox(width: 10),
                           Icon(SkippingFrogFont.time, color: AppColors.gameHeaderIconColors, size: 30),
@@ -67,7 +67,7 @@ class GameHeaderPanel extends StatelessWidget {
                           Text('2500', style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 16
+                            fontSize: 20
                           )),
                           const SizedBox(width: 10),
                           Icon(SkippingFrogFont.flag, color: AppColors.gameHeaderIconColors, size: 30),

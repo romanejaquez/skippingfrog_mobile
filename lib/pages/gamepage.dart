@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/appcolors.dart';
 import 'package:skippingfrog_mobile/helpers/skipping_frog_font_icons.dart';
+import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/widgets/gameheaderpanel.dart';
+import 'package:skippingfrog_mobile/widgets/lillypond.dart';
+import 'package:skippingfrog_mobile/widgets/swipingpanelregion.dart';
 
 class GamePage extends StatelessWidget {
 
@@ -11,6 +15,7 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Stack(
         children: [
@@ -19,11 +24,13 @@ class GamePage extends StatelessWidget {
               fit: BoxFit.fitHeight
             ),
           ),
+          const LillyPond(),
           const GameHeaderPanel(),
           Align(
             alignment: Alignment.bottomCenter,
             child: Image.asset('assets/imgs/bottom_panel.png')
-          )
+          ),
+          const SwipingPanelRegion()
         ]
       )
     );

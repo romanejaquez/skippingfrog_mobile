@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/difficulty.dart';
 import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
+import 'package:skippingfrog_mobile/services/difficultyservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
@@ -42,30 +43,30 @@ class OptionsPage extends StatelessWidget {
                           Center(
                             child: Container(
                               margin: const EdgeInsets.only(top: 120),
-                              child: Consumer<GameService>(
-                                builder: (context, gameService, child) {
+                              child: Consumer<DifficultyService>(
+                                builder: (context, difficultyService, child) {
                                   return Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SkippingFrogButton(
-                                        toggle: gameService.difficulty == Difficulty.easy,
+                                        toggle: difficultyService.difficulty == Difficulty.easy,
                                         width: 180,
                                         height: 100,
                                         on: 'btn_easy_on',
                                         off: 'btn_easy_off',
                                         onTap: () {
-                                          gameService.setGameDifficulty(Difficulty.easy);
+                                          difficultyService.setGameDifficulty(Difficulty.easy);
                                         }
                                       ),
                                       SkippingFrogButton(
-                                        toggle: gameService.difficulty == Difficulty.hard,
+                                        toggle: difficultyService.difficulty == Difficulty.hard,
                                         width: 180,
                                         height: 100,
                                         on: 'btn_hard_on',
                                         off: 'btn_hard_off',
                                         onTap: () {
-                                          gameService.setGameDifficulty(Difficulty.hard);
+                                          difficultyService.setGameDifficulty(Difficulty.hard);
                                         }
                                       ),
                                     ],

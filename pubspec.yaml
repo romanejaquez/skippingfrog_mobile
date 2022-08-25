@@ -78,6 +78,9 @@ flutter:
     - family:  SkippingFrogFont
       fonts:
         - asset: assets/fonts/SkippingFrogFont.ttf
+    - family:  Dimitri
+      fonts:
+        - asset: assets/fonts/dimitri.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
