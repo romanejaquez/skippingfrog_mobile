@@ -16,24 +16,24 @@ class SwipingPanelRegion extends StatelessWidget {
         // up
         if (details.primaryVelocity! < 0) {
           swipingGestureService.onSwipe(SwipeDirection.up, context);
-          print('up');
+          //print('up');
         }
         // down
         else if (details.primaryVelocity! > 0) {
           swipingGestureService.onSwipe(SwipeDirection.down, context);
-          print('down');
+          //print('down');
         }
       },
       onHorizontalDragEnd: (DragEndDetails details) {
         // left
         if (details.primaryVelocity! < 0) {
           swipingGestureService.onSwipe(SwipeDirection.left, context);
-          print('left');
+          //print('left');
         }
         // right
         else if (details.primaryVelocity! > 0) {
           swipingGestureService.onSwipe(SwipeDirection.right, context);
-          print('right');
+          //print('right');
         }
       },
       child: Container(
