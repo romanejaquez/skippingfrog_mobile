@@ -39,6 +39,7 @@ class _LillyPondState extends State<LillyPond> {
 
     return Center(
       child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         controller: lillyPondScrollController,
         reverse: true,
         padding: const EdgeInsets.only(bottom: 160),
@@ -53,9 +54,38 @@ class _LillyPondState extends State<LillyPond> {
 
             leafRows.add(
               leafModel.index == r ?
-                Image.asset('assets/imgs/leaf_${leafModel.direction.name}.png',
+                SizedBox(
                   width: leafDimension,
-                  height: leafDimension
+                  height: leafDimension,
+                  child: Stack(
+                    children: [
+                      Image.asset('assets/imgs/leaf_${leafModel.direction.name}.png',
+                        width: leafDimension,
+                        height: leafDimension
+                      ),
+                      leafModel.containsBug ?
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset('assets/imgs/bug.png',
+                                width: leafDimension / 2,
+                                height: leafDimension / 2
+                              ),
+                              const Text('100', style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15
+                                )
+                              ),
+                              const SizedBox(height: 25)
+                            ],
+                          ),
+                        )
+                      : const SizedBox()
+                    ],
+                  ),
                 ) :
                 leafModel.isBreakpoint ? Image.asset('assets/imgs/lilly.png',
                   width: leafDimension,
@@ -66,7 +96,6 @@ class _LillyPondState extends State<LillyPond> {
                 )
             );
           }
-
 
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

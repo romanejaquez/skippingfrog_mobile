@@ -17,7 +17,7 @@ class _FrogState extends State<Frog> with TickerProviderStateMixin {
 
   late AnimationController frogVerticalLeapCtrl;
   late AnimationController frogHorizLeapCtrl;
-  late Timer jumpTimer;
+  Timer jumpTimer = Timer(Duration.zero, () {});
   bool isFrogJumping = false;
 
   @override
@@ -56,6 +56,7 @@ class _FrogState extends State<Frog> with TickerProviderStateMixin {
   @override
   void dispose() {
     frogVerticalLeapCtrl.dispose();
+    frogHorizLeapCtrl.dispose();
     jumpTimer.cancel();
     super.dispose();
   }
