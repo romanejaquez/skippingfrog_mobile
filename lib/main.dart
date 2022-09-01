@@ -7,6 +7,7 @@ import 'package:skippingfrog_mobile/pages/optionspage.dart';
 import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
 import 'package:skippingfrog_mobile/pages/skippingfrogsplash.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
+import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
@@ -20,8 +21,11 @@ void main() {
         ChangeNotifierProvider(
           create: (_) => DifficultyService()
         ),
-        ChangeNotifierProvider(
+        Provider(
           create: (_) => SwipingGestureService()
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FrogJumpingService()
         )
       ],
       child: const SkippingFrogApp(),

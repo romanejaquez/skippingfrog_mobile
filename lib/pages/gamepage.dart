@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/appcolors.dart';
 import 'package:skippingfrog_mobile/helpers/skipping_frog_font_icons.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
+import 'package:skippingfrog_mobile/widgets/frog.dart';
 import 'package:skippingfrog_mobile/widgets/gameheaderpanel.dart';
 import 'package:skippingfrog_mobile/widgets/lillypond.dart';
 import 'package:skippingfrog_mobile/widgets/swipingpanelregion.dart';
@@ -30,6 +31,7 @@ class GamePage extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Image.asset('assets/imgs/bottom_panel.png')
           ),
+          const Frog(),
           const SwipingPanelRegion()
         ]
       )

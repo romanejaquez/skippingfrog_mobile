@@ -38,7 +38,7 @@ class SwipingPanelRegion extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.only(top: 160, bottom: 160),
-        color: Colors.red.withOpacity(0.5)
+        color: Colors.transparent
       ),
     );
   }
