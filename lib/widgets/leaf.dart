@@ -14,11 +14,8 @@ class Leaf extends StatelessWidget {
   @override
   Widget build(BuildContext context){
 
-    GameService gameService = Provider.of<GameService>(context, listen: false);
-    
     return Consumer<LeafService>(
       builder: (context, leafService, child) {
-
         
         bool hideBugOnLeaf = leafService.currentRowIndex >= rowIndex;
 
