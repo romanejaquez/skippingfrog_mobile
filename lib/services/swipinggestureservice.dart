@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/swipedirection.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
+import 'package:skippingfrog_mobile/services/leafservice.dart';
 
 class SwipingGestureService {
 
@@ -33,6 +34,9 @@ class SwipingGestureService {
         curve: Curves.easeOut).then((value) {
           direction = SwipeDirection.none;
           frogJumpingService.resetDirection();
+
+          LeafService leafService = Provider.of<LeafService>(context, listen: false);
+          leafService.notifyCurrentLeafOnRow(nextLeaf.index, leafRowCount - 1);
         });
 
       leafRowCount++;

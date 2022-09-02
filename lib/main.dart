@@ -9,6 +9,7 @@ import 'package:skippingfrog_mobile/pages/skippingfrogsplash.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
+import 'package:skippingfrog_mobile/services/leafservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
 void main() {
@@ -26,6 +27,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => FrogJumpingService()
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LeafService()
         )
       ],
       child: const SkippingFrogApp(),
