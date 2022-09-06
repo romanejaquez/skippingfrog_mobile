@@ -25,7 +25,7 @@ class GameHeaderPanel extends StatelessWidget {
                   Row(
                     children: [
                       Icon(SkippingFrogFont.frog, color: AppColors.gameHeaderIconColors, size: 30),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 16),
                       Text('3', style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -36,7 +36,7 @@ class GameHeaderPanel extends StatelessWidget {
                   Row(
                     children: [
                       Icon(SkippingFrogFont.bug, color: AppColors.gameHeaderIconColors, size: 30),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 16),
                       Text('20', style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -72,7 +72,7 @@ class GameHeaderPanel extends StatelessWidget {
                           const SizedBox(width: 10),
                           Icon(SkippingFrogFont.flag, color: AppColors.gameHeaderIconColors, size: 30),
                         ],
-                      ),
+                      )
                     ],
                   )
                 ],

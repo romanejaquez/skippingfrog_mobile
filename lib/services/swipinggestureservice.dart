@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/frogmessages.dart';
 import 'package:skippingfrog_mobile/helpers/swipedirection.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
+import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
 
@@ -40,6 +44,14 @@ class SwipingGestureService {
         });
 
       leafRowCount++;
+
+      // check if the user has won or lost
+    }
+    else {
+      FrogMessagesService frogMessagesService = Provider.of<FrogMessagesService>(context, listen: false);
+      frogMessagesService.setMessage(FrogMessages.splash);
+
+      // check whether the user has won or lost
     }
   }
 }
