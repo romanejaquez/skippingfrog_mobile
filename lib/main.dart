@@ -17,6 +17,10 @@ import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
 void main() {
+
+  WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
+  Utils.preloadImages(binding);
+
   runApp(
     MultiProvider(
       providers: [
