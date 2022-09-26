@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/pages/gamepage.dart';
 import 'package:skippingfrog_mobile/pages/helppage.dart';
 import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
+import 'package:skippingfrog_mobile/pages/losingpage.dart';
 import 'package:skippingfrog_mobile/pages/optionspage.dart';
 import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
 import 'package:skippingfrog_mobile/pages/skippingfrogsplash.dart';
@@ -11,6 +13,7 @@ import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
+import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
 void main() {
@@ -34,6 +37,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => FrogMessagesService()
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ScorePanelService()
         )
       ],
       child: const SkippingFrogApp(),
@@ -48,6 +54,7 @@ class SkippingFrogApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      navigatorKey: Utils.mainNav,
       theme: ThemeData(
         fontFamily: 'Dimitri'
       ),
@@ -66,7 +73,8 @@ class SkippingFrogApp extends StatelessWidget {
         HelpPage.route: (context) => const HelpPage(),
         OptionsPage.route: (context) => const OptionsPage(),
         GamePage.route: (context) => const GamePage(),
-        LeaderboardsPage.route: (context) => const LeaderboardsPage()
+        LeaderboardsPage.route: (context) => const LeaderboardsPage(),
+        LosingPage.route: (context) => const LosingPage(),
       },
     );
   }

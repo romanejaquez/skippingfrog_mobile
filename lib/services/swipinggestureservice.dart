@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/frogmessages.dart';
@@ -41,17 +39,37 @@ class SwipingGestureService {
 
           LeafService leafService = Provider.of<LeafService>(context, listen: false);
           leafService.notifyCurrentLeafOnRow(nextLeaf.index, leafRowCount - 1);
+
+          if (nextLeaf.isCheckpoint) {
+            /// show a message
+            FrogMessagesService frogMessagesService = 
+              Provider.of<FrogMessagesService>(context, listen: false);
+            frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'CHECKPOINT #${nextLeaf.checkpointValue} REACHED!');
+
+          }
         });
 
       leafRowCount++;
 
       // check if the user has won or lost
     }
-    else {
+    else { 
       FrogMessagesService frogMessagesService = Provider.of<FrogMessagesService>(context, listen: false);
-      frogMessagesService.setMessage(FrogMessages.splash);
 
-      // check whether the user has won or lost
+      gameService.decrementLives();
+
+      if (gameService.isGameOver()) {
+        frogMessagesService.setMessage(FrogMessages.none);
+        gameService.goToLosingPage();
+      }
+      else {
+        frogMessagesService.setMessage(FrogMessages.splash);
+      }
     }
+  }
+
+  void reset() {
+    direction = SwipeDirection.none;
+    leafRowCount = 1;
   }
 }

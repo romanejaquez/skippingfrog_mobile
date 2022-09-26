@@ -6,6 +6,7 @@ import 'package:skippingfrog_mobile/helpers/appcolors.dart';
 import 'package:skippingfrog_mobile/helpers/frogmessages.dart';
 import 'package:skippingfrog_mobile/helpers/skipping_frog_font_icons.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
+import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 
 class FrogSplashMessage extends StatefulWidget {
   const FrogSplashMessage({super.key});
@@ -57,13 +58,13 @@ class _FrogSplashMessageState extends State<FrogSplashMessage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('OOPS!',
+                  const Text('OOPS!',
                     style: TextStyle(
                       color: AppColors.burnedYellow,
                       fontSize: 40
                     )
                   ),
-                  Text('Watch your step!',
+                  const Text('Watch your step!',
                     style: TextStyle(color: Colors.white,
                       fontSize: 20
                     )
@@ -72,16 +73,20 @@ class _FrogSplashMessageState extends State<FrogSplashMessage> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(SkippingFrogFont.frog, color: AppColors.gameHeaderIconColors, size: 25),
+                      const Icon(SkippingFrogFont.frog, color: AppColors.gameHeaderIconColors, size: 25),
                       const SizedBox(width: 16),
-                      Text('3', style: TextStyle(
-                        color: AppColors.gameHeaderIconColors,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35
-                      )),
-                      SizedBox(width: 10),
+                      Consumer<ScorePanelService>(
+                        builder: (context, scorePanelService, child) {
+                          return Text('${scorePanelService.lives}', style: const TextStyle(
+                            color: AppColors.gameHeaderIconColors,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35
+                          ));
+                        }
+                      ),
+                      const SizedBox(width: 10),
                       Column(
-                        children: [
+                        children: const [
                           Text('Lives\nRemaining', style: TextStyle(
                             color: AppColors.gameHeaderIconColors)),
                         ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/difficulty.dart';
+import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
-import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class OptionsPage extends StatelessWidget {
@@ -83,7 +83,7 @@ class OptionsPage extends StatelessWidget {
                         on: 'btn_viewlb_on',
                         off: 'btn_viewlb_off',
                         onTap: () {
-                          Navigator.of(context).pushNamed(LeaderboardsPage.route);
+                          Utils.mainNav.currentState!.pushNamed(LeaderboardsPage.route);
                         }
                       )
                     ]
@@ -98,7 +98,7 @@ class OptionsPage extends StatelessWidget {
                       on: 'btn_back_on',
                       off: 'btn_back_off',
                       onTap: () {
-                        Navigator.of(context).pop();
+                        Utils.mainNav.currentState!.pop();
                       }
                     ),
                   ],

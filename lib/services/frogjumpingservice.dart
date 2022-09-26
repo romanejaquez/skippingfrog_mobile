@@ -17,4 +17,10 @@ class FrogJumpingService extends ChangeNotifier {
   void resetDirection() {
     currentSwipeDirection = SwipeDirection.none;
   }
+
+  void reset() {
+    startFrogPosition = 0;
+    endFrogPosition = 0;
+    currentSwipeDirection = SwipeDirection.none;
+  }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skippingfrog_mobile/helpers/appcolors.dart';
-import 'package:skippingfrog_mobile/helpers/skipping_frog_font_icons.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
+import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/widgets/frog.dart';
 import 'package:skippingfrog_mobile/widgets/frogmessagepanel.dart';
 import 'package:skippingfrog_mobile/widgets/gameheaderpanel.dart';
@@ -17,6 +16,9 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    GameService gameService = Provider.of<GameService>(context, listen: false);
+    gameService.startGame();
 
     return Scaffold(
       body: Stack(

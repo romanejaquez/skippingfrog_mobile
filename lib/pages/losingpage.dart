@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/pages/gamepage.dart';
 import 'package:skippingfrog_mobile/pages/helppage.dart';
 import 'package:skippingfrog_mobile/pages/optionspage.dart';
+import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
+import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
-class SkippingFrogLanding extends StatefulWidget {
+class LosingPage extends StatefulWidget {
 
-  static String route = '/landing';
+  static String route = '/losing';
 
-  const SkippingFrogLanding({Key? key}) : super(key: key);
+  const LosingPage({Key? key}) : super(key: key);
 
   @override
-  State<SkippingFrogLanding> createState() => _SkippingFrogLandingState();
+  State<LosingPage> createState() => _LosingPageState();
 }
 
-class _SkippingFrogLandingState extends State<SkippingFrogLanding> with SingleTickerProviderStateMixin {
+class _LosingPageState extends State<LosingPage> with SingleTickerProviderStateMixin {
 
   late AnimationController btnsCtrl;
 
@@ -38,32 +41,27 @@ class _SkippingFrogLandingState extends State<SkippingFrogLanding> with SingleTi
   @override
   Widget build(BuildContext context) {
 
+    GameService gameService = Provider.of<GameService>(context, listen: false);
+    
     List<SkippingFrogButton> buttons = [
       SkippingFrogButton(
         width: 120,
         height: 120,
-        on: 'btn_help_on',
-        off: 'btn_help_off',
+        on: 'btn_lose_yes_on',
+        off: 'btn_lose_yes_off',
         onTap: () {
-          Utils.mainNav.currentState!.pushNamed(HelpPage.route);
+          gameService.resetGame();
+          Utils.mainNav.currentState!.pushReplacementNamed(GamePage.route);
         }
       ),
       SkippingFrogButton(
         width: 120,
         height: 120,
-        on: 'btn_start_on',
-        off: 'btn_start_off',
+        on: 'btn_lose_no_on',
+        off: 'btn_lose_no_off',
         onTap: () {
-          Utils.mainNav.currentState!.pushNamed(GamePage.route);
-        }
-      ),
-      SkippingFrogButton(
-        width: 120,
-        height: 120,
-        on: 'btn_options_on',
-        off: 'btn_options_off',
-        onTap: () {
-          Utils.mainNav.currentState!.pushNamed(OptionsPage.route);
+          gameService.resetGame();
+          Utils.mainNav.currentState!.popUntil((route) => route.settings.name == SkippingFrogLanding.route);
         }
       )
     ];
@@ -72,7 +70,7 @@ class _SkippingFrogLandingState extends State<SkippingFrogLanding> with SingleTi
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset('assets/imgs/main_bg.png',
+            child: Image.asset('assets/imgs/lose_bg.png',
               fit: BoxFit.fitHeight
             ),
           ),
@@ -87,7 +85,7 @@ class _SkippingFrogLandingState extends State<SkippingFrogLanding> with SingleTi
                     position: Tween<Offset>(
                       begin: const Offset(0.0, -0.25), end: Offset.zero
                     ).animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
-                    child: Image.asset('assets/imgs/skippingfrog_logo.png',
+                    child: Image.asset('assets/imgs/playagain_lose.png',
                       width: 300,
                       height: 250
                     ),
@@ -99,7 +97,7 @@ class _SkippingFrogLandingState extends State<SkippingFrogLanding> with SingleTi
                   child: ScaleTransition(
                     scale: Tween<double>(begin: 0.9, end: 1.0)
                     .animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
-                    child: Image.asset('assets/imgs/frog_win.png',
+                    child: Image.asset('assets/imgs/frog_lose.png',
                       width: 380,
                       height: 380
                     ),

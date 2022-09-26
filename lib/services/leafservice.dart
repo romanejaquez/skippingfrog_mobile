@@ -10,4 +10,9 @@ class LeafService extends ChangeNotifier {
     currentLeafIndex = leafIndex;
     notifyListeners();
   }
+
+  void reset() {
+    currentLeafIndex = 0;
+    currentRowIndex = 0;
+  }
 }

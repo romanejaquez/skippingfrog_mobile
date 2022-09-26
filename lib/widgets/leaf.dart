@@ -45,14 +45,14 @@ class Leaf extends StatelessWidget {
                           fontSize: 15
                         )
                       ),
-                      const SizedBox(height: 25)
+                      const SizedBox(height: 20)
                     ],
                   ),
                 ) : const SizedBox()
               ],
             ),
           ) :
-          leaf.isBreakpoint ? Image.asset('assets/imgs/lilly.png',
+          leaf.isCheckpoint ? Image.asset('assets/imgs/lilly.png',
             width: leafSize,
             height: leafSize
           ) :

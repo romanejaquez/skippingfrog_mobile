@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class LeaderboardsPage extends StatelessWidget {
@@ -36,7 +37,7 @@ class LeaderboardsPage extends StatelessWidget {
                       on: 'btn_back_on',
                       off: 'btn_back_off',
                       onTap: () {
-                        Navigator.of(context).pop();
+                        Utils.mainNav.currentState!.pop();
                       }
                     ),
                   ],

@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:skippingfrog_mobile/helpers/utils.dart';
 
 class SkippingFrogAppSplash extends StatefulWidget {
 
@@ -11,22 +11,29 @@ class SkippingFrogAppSplash extends StatefulWidget {
   State<SkippingFrogAppSplash> createState() => _SkippingFrogAppSplashState();
 }
 
-class _SkippingFrogAppSplashState extends State<SkippingFrogAppSplash> {
+class _SkippingFrogAppSplashState extends State<SkippingFrogAppSplash> with SingleTickerProviderStateMixin {
   
   late Timer timer;
+  late AnimationController logoCtrl;
 
   @override 
   void initState() {
     super.initState();
 
+    logoCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3)
+    )..forward();
+
     timer = Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacementNamed('/landing');
+      Utils.mainNav.currentState!.pushReplacementNamed('/landing');
     });
   }
 
   @override
   void dispose() {
     timer.cancel();
+    logoCtrl.dispose();
     super.dispose();
   }
   
@@ -36,10 +43,18 @@ class _SkippingFrogAppSplashState extends State<SkippingFrogAppSplash> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Image.asset(
-          'assets/imgs/skippingfrog_logo_off.png',
-          width: 250,
-          height: 250
+        child: FadeTransition(
+          opacity: Tween<double>(begin: 0.0, end: 1.0)
+            .animate(CurvedAnimation(parent: logoCtrl, curve: Curves.easeInOut)),
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.8, end: 1.0)
+            .animate(CurvedAnimation(parent: logoCtrl, curve: Curves.easeInOut)),
+            child: Image.asset(
+              'assets/imgs/skippingfrog_logo_off.png',
+              width: 250,
+              height: 250
+            ),
+          ),
         ),
       )
     );

@@ -1,7 +1,37 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class FrogSimpleMessage extends StatelessWidget {
-  const FrogSimpleMessage({super.key});
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/frogmessages.dart';
+import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
+
+class FrogSimpleMessage extends StatefulWidget {
+
+  final String msg;
+  const FrogSimpleMessage({super.key, required this.msg});
+
+  @override
+  State<FrogSimpleMessage> createState() => _FrogSimpleMessageState();
+}
+
+class _FrogSimpleMessageState extends State<FrogSimpleMessage> {
+
+  late Timer msgTimer = Timer(Duration.zero, () {});
+
+  @override
+  void initState() {
+    super.initState();
+
+    msgTimer = Timer(const Duration(milliseconds: 1500), () {
+      Provider.of<FrogMessagesService>(context, listen: false).setMessage(FrogMessages.none);
+    });
+  }
+
+  @override
+  void dispose() {
+    msgTimer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +48,14 @@ class FrogSimpleMessage extends StatelessWidget {
                 bottom: 20,
                 top: 20
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20)
                 )
               ),
-              child: Text('Initializing\nGame...',
+              child: Text(widget.msg,
                   style: TextStyle(color: Colors.white,
                     fontSize: 20
                   )
