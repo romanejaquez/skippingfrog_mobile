@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 
 class SkippingFrogButton extends StatefulWidget {
   final String on;
@@ -35,7 +36,9 @@ class _SkippingFrogButtonState extends State<SkippingFrogButton> {
     }
 
     return GestureDetector(
-      onTap: () => widget.onTap(),
+      onTap: () {
+        widget.onTap();
+      },
       onTapDown: (details) {
           if (widget.toggle == null) {
             setState(() {

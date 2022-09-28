@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/frogmessages.dart';
+import 'package:skippingfrog_mobile/helpers/scoretype.dart';
+import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/swipedirection.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
@@ -12,20 +16,35 @@ class SwipingGestureService {
   SwipeDirection direction = SwipeDirection.none;
   ScrollController? swipeController;
   int leafRowCount = 1;
+  Timer swipeReminder = Timer(Duration.zero, () {});
+  late BuildContext ctx;
+
+  late GameService gameService;
+  late FrogMessagesService frogMessagesService;
+  late LeafService leafService;
 
   void setSwipingController(ScrollController ctrl) {
     swipeController = ctrl;
   }
 
-  void onSwipe(SwipeDirection d, BuildContext context) {
+  void initSwipeGestureService(BuildContext context) {
+    ctx = context;
+    gameService = Provider.of<GameService>(ctx, listen: false);
+    frogMessagesService = Provider.of<FrogMessagesService>(ctx, listen: false);   
+    leafService = Provider.of<LeafService>(ctx, listen: false);   
+  }
+
+  void onSwipe(SwipeDirection d) {
     direction = d;
-    GameService gameService = Provider.of<GameService>(context, listen: false);
+    
+    // reset swipe reminder - the user has swiped
+    resetSwipeReminder();
 
     var nextLeaf = gameService.leaves[leafRowCount];
 
     if(nextLeaf.direction.name == direction.name) {
-
-      FrogJumpingService frogJumpingService = Provider.of<FrogJumpingService>(context, listen: false);
+      
+      FrogJumpingService frogJumpingService = Provider.of<FrogJumpingService>(ctx, listen: false);
       frogJumpingService.setFrogNextJumpPosition(
         nextLeaf.index.toDouble(),
         direction
@@ -34,31 +53,31 @@ class SwipingGestureService {
       swipeController!.animateTo(gameService.leafDimension * leafRowCount, 
         duration: const Duration(milliseconds: 750), 
         curve: Curves.easeOut).then((value) {
+
           direction = SwipeDirection.none;
           frogJumpingService.resetDirection();
 
-          LeafService leafService = Provider.of<LeafService>(context, listen: false);
           leafService.notifyCurrentLeafOnRow(nextLeaf.index, leafRowCount - 1);
+
+          if (nextLeaf.containsBug) {
+            gameService.addToScore(ScoreType.bug);
+          }
 
           if (nextLeaf.isCheckpoint) {
             /// show a message
-            FrogMessagesService frogMessagesService = 
-              Provider.of<FrogMessagesService>(context, listen: false);
             frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'CHECKPOINT #${nextLeaf.checkpointValue} REACHED!');
-
           }
         });
 
       leafRowCount++;
-
-      // check if the user has won or lost
     }
-    else { 
-      FrogMessagesService frogMessagesService = Provider.of<FrogMessagesService>(context, listen: false);
-
+    else {
+      
+      // decrement lives as you did the wrong swipe
       gameService.decrementLives();
 
       if (gameService.isGameOver()) {
+        swipeReminder.cancel();
         frogMessagesService.setMessage(FrogMessages.none);
         gameService.goToLosingPage();
       }
@@ -71,5 +90,17 @@ class SwipingGestureService {
   void reset() {
     direction = SwipeDirection.none;
     leafRowCount = 1;
+    swipeReminder.cancel();
+  }
+
+  void resetSwipeReminder() {
+    swipeReminder.cancel();
+    startSwipeReminder();
+  }
+
+  void startSwipeReminder() {
+    swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
+      frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
+    });
   }
 }

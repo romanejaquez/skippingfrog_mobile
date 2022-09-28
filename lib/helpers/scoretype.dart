@@ -1,0 +1,4 @@
+enum ScoreType {
+  bug,
+  checkpoint
+}

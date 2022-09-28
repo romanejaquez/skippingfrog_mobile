@@ -51,7 +51,7 @@ class _FrogMessagePanelState extends State<FrogMessagePanel> with SingleTickerPr
             msg = const SizedBox();
             break;
         }
-
+        
         msgCtrl.reset();
         msgCtrl.forward();
 
