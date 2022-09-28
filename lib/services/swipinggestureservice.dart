@@ -6,7 +6,6 @@ import 'package:skippingfrog_mobile/helpers/frogmessages.dart';
 import 'package:skippingfrog_mobile/helpers/scoretype.dart';
 import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/swipedirection.dart';
-import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
@@ -21,7 +20,6 @@ class SwipingGestureService {
   late BuildContext ctx;
 
   late GameService gameService;
-  late AudioService audioService;
   late FrogMessagesService frogMessagesService;
   late LeafService leafService;
 
@@ -32,7 +30,6 @@ class SwipingGestureService {
   void initSwipeGestureService(BuildContext context) {
     ctx = context;
     gameService = Provider.of<GameService>(ctx, listen: false);
-    audioService = Provider.of<AudioService>(ctx, listen: false);
     frogMessagesService = Provider.of<FrogMessagesService>(ctx, listen: false);   
     leafService = Provider.of<LeafService>(ctx, listen: false);   
   }
@@ -47,7 +44,6 @@ class SwipingGestureService {
 
     if(nextLeaf.direction.name == direction.name) {
       
-      audioService.playSound(SkippingFrogSounds.jump, waitForSoundToFinish: true);
       FrogJumpingService frogJumpingService = Provider.of<FrogJumpingService>(ctx, listen: false);
       frogJumpingService.setFrogNextJumpPosition(
         nextLeaf.index.toDouble(),
@@ -58,7 +54,6 @@ class SwipingGestureService {
         duration: const Duration(milliseconds: 750), 
         curve: Curves.easeOut).then((value) {
 
-          audioService.playSound(SkippingFrogSounds.land, waitForSoundToFinish: true);
           direction = SwipeDirection.none;
           frogJumpingService.resetDirection();
 
@@ -70,7 +65,6 @@ class SwipingGestureService {
 
           if (nextLeaf.isCheckpoint) {
             /// show a message
-            audioService.playSound(SkippingFrogSounds.chimeup, waitForSoundToFinish: true);
             frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'CHECKPOINT #${nextLeaf.checkpointValue} REACHED!');
           }
         });
@@ -88,7 +82,6 @@ class SwipingGestureService {
         gameService.goToLosingPage();
       }
       else {
-        audioService.playSound(SkippingFrogSounds.splash, waitForSoundToFinish: true);
         frogMessagesService.setMessage(FrogMessages.splash);
       }
     }
@@ -107,7 +100,6 @@ class SwipingGestureService {
 
   void startSwipeReminder() {
     swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
-      audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
       frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
     });
   }
