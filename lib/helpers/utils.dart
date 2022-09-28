@@ -102,11 +102,11 @@ class Utils {
     ];
   
     binding.addPostFrameCallback((_) async {
-    BuildContext context = binding.renderViewElement!;
-    for(var asset in allAssets)
-    {
-      precacheImage(AssetImage(asset), context);
-    }
-  });
+      BuildContext context = binding.renderViewElement!;
+      for(var asset in allAssets)
+      {
+        precacheImage(AssetImage(asset), context);
+      }
+    });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/swipedirection.dart';
@@ -15,25 +17,25 @@ class SwipingPanelRegion extends StatelessWidget {
       onVerticalDragEnd: (DragEndDetails details) {
         // up
         if (details.primaryVelocity! < 0) {
-          swipingGestureService.onSwipe(SwipeDirection.up, context);
-          print('up');
+          swipingGestureService.onSwipe(SwipeDirection.up);
+          log('up');
         }
         // down
         else if (details.primaryVelocity! > 0) {
-          swipingGestureService.onSwipe(SwipeDirection.down, context);
-          print('down');
+          swipingGestureService.onSwipe(SwipeDirection.down);
+          log('down');
         }
       },
       onHorizontalDragEnd: (DragEndDetails details) {
         // left
         if (details.primaryVelocity! < 0) {
-          swipingGestureService.onSwipe(SwipeDirection.left, context);
-          print('left');
+          swipingGestureService.onSwipe(SwipeDirection.left);
+          log('left');
         }
         // right
         else if (details.primaryVelocity! > 0) {
-          swipingGestureService.onSwipe(SwipeDirection.right, context);
-          print('right');
+          swipingGestureService.onSwipe(SwipeDirection.right);
+          log('right');
         }
       },
       child: Container(

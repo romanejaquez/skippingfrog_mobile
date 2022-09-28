@@ -27,7 +27,15 @@ class ScorePanelService extends ChangeNotifier {
 
     void pauseTime() {}
 
-    void resetScorePanel() {}
+    void addToScore(int scoreValue) {
+      score += scoreValue;
+      notifyListeners();
+    }
+
+    void incrementBugs() {
+      bugs++;
+      notifyListeners();
+    }
 
     void incrementLives() {
       lives++;
@@ -39,12 +47,12 @@ class ScorePanelService extends ChangeNotifier {
       notifyListeners();
     }
 
-  void reset() {
-    lives = 3;
-    bugs = 0;
-    score = 0;
-    gameTimer.cancel();
-    timeAsString = "00:00:00";
-    time = DateTime.parse("2020-01-01T00:00:00");
-  }
+    void reset() {
+      lives = 3;
+      bugs = 0;
+      score = 0;
+      gameTimer.cancel();
+      timeAsString = "00:00:00";
+      time = DateTime.parse("2020-01-01T00:00:00");
+    }
 }
