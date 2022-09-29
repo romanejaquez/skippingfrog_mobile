@@ -1,8 +1,12 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/pages/gamepage.dart';
 import 'package:skippingfrog_mobile/pages/helppage.dart';
 import 'package:skippingfrog_mobile/pages/optionspage.dart';
+import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class SkippingFrogLanding extends StatefulWidget {
@@ -37,6 +41,9 @@ class _SkippingFrogLandingState extends State<SkippingFrogLanding> with SingleTi
 
   @override
   Widget build(BuildContext context) {
+
+    AudioService audioService = Provider.of<AudioService>(context, listen: false);
+    audioService.playSound(SkippingFrogSounds.ribbit);
 
     List<SkippingFrogButton> buttons = [
       SkippingFrogButton(

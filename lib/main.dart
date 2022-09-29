@@ -8,6 +8,7 @@ import 'package:skippingfrog_mobile/pages/losingpage.dart';
 import 'package:skippingfrog_mobile/pages/optionspage.dart';
 import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
 import 'package:skippingfrog_mobile/pages/skippingfrogsplash.dart';
+import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
@@ -26,6 +27,9 @@ void main() {
       providers: [
         Provider(
           create: (_) => GameService()
+        ),
+        Provider(
+          create: (_) => AudioService()
         ),
         ChangeNotifierProvider(
           create: (_) => DifficultyService()
