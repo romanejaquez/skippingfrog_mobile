@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/pages/gamepage.dart';
 import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
+import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
@@ -21,12 +23,15 @@ class _LosingPageState extends State<LosingPage> with SingleTickerProviderStateM
   late AnimationController btnsCtrl;
 
   late GameService gameService;
-
+  late AudioService audioService;
   @override
   void initState() {
     super.initState();
 
     gameService = Provider.of<GameService>(context, listen: false);
+    audioService = Provider.of<AudioService>(context, listen: false);
+
+    audioService.playSound(SkippingFrogSounds.loser);
     
     btnsCtrl = AnimationController(
       vsync: this,
@@ -37,6 +42,8 @@ class _LosingPageState extends State<LosingPage> with SingleTickerProviderStateM
   @override
   void dispose() {
     btnsCtrl.dispose();
+
+    audioService.stopAllSounds();
     super.dispose();
   }
 
@@ -68,6 +75,7 @@ class _LosingPageState extends State<LosingPage> with SingleTickerProviderStateM
 
     return WillPopScope(
       onWillPop: () async {
+        audioService.stopAllSounds();
         return Future.value(true);
       },
       child: Scaffold(

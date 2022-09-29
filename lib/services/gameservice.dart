@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/scoretype.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/models/leafmodel.dart';
 import 'package:skippingfrog_mobile/pages/losingpage.dart';
+import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
@@ -26,6 +29,7 @@ class GameService {
   late SwipingGestureService swipingGestureService;
   late ScorePanelService scorePanelService;
   late LeafService leafService;
+  late AudioService audioService;
 
   void initGame(BuildContext context) {
     ctx = context;
@@ -43,6 +47,8 @@ class GameService {
 
     swipingGestureService = Provider.of<SwipingGestureService>(ctx, listen: false);
     swipingGestureService.initSwipeGestureService(ctx);
+
+    audioService = Provider.of<AudioService>(ctx, listen: false);
   }
 
   void resetServices() {
@@ -50,6 +56,7 @@ class GameService {
     scorePanelService.reset();
     leafService.reset();
     swipingGestureService.reset();
+    audioService.reset();
   }
 
   void addToScore(ScoreType type) {
@@ -59,6 +66,7 @@ class GameService {
     switch(type) {
       case ScoreType.bug:
         scorePanelService.incrementBugs();
+        audioService.playSound(SkippingFrogSounds.ribbit, waitForSoundToFinish: true);
         score = bugScoreValue;
         break;
       case ScoreType.checkpoint:
@@ -68,6 +76,7 @@ class GameService {
 
     int additionalLives = scorePanelService.bugs % 5 == 0 ? 1 : 0;
     if (additionalLives > 0) {
+      audioService.playSound(SkippingFrogSounds.ribbit, waitForSoundToFinish: true);
       scorePanelService.incrementLives();
       score += lifeScoreValue;
     }
@@ -109,5 +118,9 @@ class GameService {
   void resetGame() {
     resetServices();
     resetGameFromTheBeginning();
+  }
+
+  void stopAllSounds() {
+    audioService.stopAllSounds();
   }
 }
