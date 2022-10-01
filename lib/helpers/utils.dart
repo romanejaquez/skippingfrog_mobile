@@ -26,7 +26,7 @@ class Utils {
     
     for(var i = 0; i < rows; i++) {
 
-      var isCheckpoint = i != 0 && i % (rows / 10) == 0;
+      var isCheckpoint = false; // i != 0 && i % (rows / 10) == 0;
 
       leaves.add(LeafModel(
         index: randomLeaf.nextInt(4),

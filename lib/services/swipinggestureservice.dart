@@ -82,6 +82,7 @@ class SwipingGestureService {
 
           if (leafRowCount == gameService.leaves.length) {
             frogJumpingService.makeFinalJump(onFinalJumpDone: () {
+              gameService.stopGameClock();
               swipeReminder.cancel();
               frogMessagesService.setMessage(FrogMessages.none);
               gameService.goToWinningPage();

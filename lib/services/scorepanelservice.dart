@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:skippingfrog_mobile/models/scoreconfig.dart';
 
 class ScorePanelService extends ChangeNotifier {
 
@@ -23,7 +24,18 @@ class ScorePanelService extends ChangeNotifier {
       });
     }
 
-    void stopTime() {}
+    void stopTime() {
+      gameTimer.cancel();
+    }
+
+    ScoreConfig getScoreConfig() {
+      return ScoreConfig(
+        bugs: bugs, 
+        score: score, 
+        time: time, 
+        timeAsString: timeAsString
+      );
+    }
 
     void pauseTime() {}
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
+import 'package:skippingfrog_mobile/models/scoreconfig.dart';
 import 'package:skippingfrog_mobile/pages/gamepage.dart';
 import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
 import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
@@ -51,6 +52,23 @@ class _WinningPageState extends State<WinningPage> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
 
+    ScoreConfig scoreConfig = gameService.getScoreConfig();
+    
+    List<Widget> scoreConfigPanelItems = [
+      Column(
+        children: [
+          const Text('Your Score'),
+          Text('${scoreConfig.score}', style: const TextStyle(fontSize: 35))
+        ],
+      ),
+      Column(
+        children: [
+          const Text('Your Time'),
+          Text(scoreConfig.timeAsString, style: const TextStyle(fontSize: 35))
+        ],
+      )
+    ];
+
     List<SkippingFrogButton> buttons = [
       SkippingFrogButton(
         width: 120,
@@ -97,59 +115,83 @@ class _WinningPageState extends State<WinningPage> with SingleTickerProviderStat
                 fit: BoxFit.fitHeight
               ),
             ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FadeTransition(
-                    opacity: Tween<double>(begin: 0.0, end: 1.0)
-                    .animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
-                    child: SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0.0, -0.25), end: Offset.zero
-                      ).animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
-                      child: Image.asset('assets/imgs/playagain_win.png',
-                        width: 300,
-                        height: 250
-                      ),
+            SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: List.generate(scoreConfigPanelItems.length, (index) {
+                        
+                        var interval = 1 / scoreConfigPanelItems.length;
+                
+                        return FadeTransition(
+                           opacity: Tween<double>(begin: 0.0, end: 1.0)
+                            .animate(CurvedAnimation(
+                              parent: btnsCtrl,
+                              curve: Interval(index * interval, (index + 1) * interval, curve: Curves.easeInOut))),
+                            child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0.0, -1.0), end: Offset.zero
+                            ).animate(CurvedAnimation(
+                              parent: btnsCtrl, 
+                              curve: Interval(index * interval, (index + 1) * interval, curve: Curves.easeInOut))),
+                            child: scoreConfigPanelItems[index]),
+                        );
+                      })
                     ),
-                  ),
-                  FadeTransition(
-                    opacity: Tween<double>(begin: 0.0, end: 1.0)
-                    .animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
-                    child: ScaleTransition(
-                      scale: Tween<double>(begin: 0.9, end: 1.0)
+                    FadeTransition(
+                      opacity: Tween<double>(begin: 0.0, end: 1.0)
                       .animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
-                      child: Image.asset('assets/imgs/frog_win.png',
-                        width: 380,
-                        height: 380
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0.0, -0.25), end: Offset.zero
+                        ).animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
+                        child: Image.asset('assets/imgs/playagain_win.png',
+                          width: 250,
+                          height: 200
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(buttons.length, (index) {
-                      
-                      var interval = 1 / buttons.length;
-    
-                      return FadeTransition(
-                         opacity: Tween<double>(begin: 0.0, end: 1.0)
-                          .animate(CurvedAnimation(
-                            parent: btnsCtrl,
-                            curve: Interval(index * interval, (index + 1) * interval, curve: Curves.easeInOut))),
-                          child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0.0, 1.0), end: Offset.zero
-                          ).animate(CurvedAnimation(
-                            parent: btnsCtrl, 
-                            curve: Interval(index * interval, (index + 1) * interval, curve: Curves.easeInOut))),
-                          child: buttons[index]),
-                      );
-                    })
-                  )
-                ],
-              )
-            )
+                    FadeTransition(
+                      opacity: Tween<double>(begin: 0.0, end: 1.0)
+                      .animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
+                      child: ScaleTransition(
+                        scale: Tween<double>(begin: 0.9, end: 1.0)
+                        .animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
+                        child: Image.asset('assets/imgs/frog_win.png',
+                          width: 380,
+                          height: 380
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(buttons.length, (index) {
+                        
+                        var interval = 1 / buttons.length;
+                
+                        return FadeTransition(
+                           opacity: Tween<double>(begin: 0.0, end: 1.0)
+                            .animate(CurvedAnimation(
+                              parent: btnsCtrl,
+                              curve: Interval(index * interval, (index + 1) * interval, curve: Curves.easeInOut))),
+                            child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0.0, 1.0), end: Offset.zero
+                            ).animate(CurvedAnimation(
+                              parent: btnsCtrl, 
+                              curve: Interval(index * interval, (index + 1) * interval, curve: Curves.easeInOut))),
+                            child: buttons[index]),
+                        );
+                      })
+                    )
+                  ],
+                )
+              ),
+            ),
+            
           ],
         )
       ),

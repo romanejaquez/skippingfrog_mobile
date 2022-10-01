@@ -6,6 +6,7 @@ import 'package:skippingfrog_mobile/helpers/scoretype.dart';
 import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/models/leafmodel.dart';
+import 'package:skippingfrog_mobile/models/scoreconfig.dart';
 import 'package:skippingfrog_mobile/pages/losingpage.dart';
 import 'package:skippingfrog_mobile/pages/winningpage.dart';
 import 'package:skippingfrog_mobile/services/audioservice.dart';
@@ -142,5 +143,13 @@ class GameService {
 
   void goToWinningPage() {
     Utils.mainNav.currentState!.pushReplacementNamed(WinningPage.route);
+  }
+
+  void stopGameClock() {
+    scorePanelService.stopTime();
+  }
+
+  ScoreConfig getScoreConfig() {
+    return scorePanelService.getScoreConfig();
   }
 }
