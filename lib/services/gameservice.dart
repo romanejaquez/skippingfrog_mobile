@@ -7,9 +7,11 @@ import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/models/leafmodel.dart';
 import 'package:skippingfrog_mobile/pages/losingpage.dart';
+import 'package:skippingfrog_mobile/pages/winningpage.dart';
 import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
+import 'package:skippingfrog_mobile/services/pondservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
@@ -24,6 +26,7 @@ class GameService {
   int lifeScoreValue = 250;
   int checkpointValue = 100;
   int bugCount = 0;
+  int gameLeafCountShowPond = 9;
 
   // services to query
   late FrogJumpingService frogJumpingService;
@@ -31,6 +34,7 @@ class GameService {
   late ScorePanelService scorePanelService;
   late LeafService leafService;
   late AudioService audioService;
+  late PondService pondService;
 
   void initGame(BuildContext context) {
     ctx = context;
@@ -41,6 +45,11 @@ class GameService {
     resetGameFromTheBeginning();
   }
 
+  bool showPond(int leafRowCount) {
+    return leafRowCount >= leaves.length - gameLeafCountShowPond;
+  }
+
+  // initialize all service in one single place
   void initServices() {
     frogJumpingService = Provider.of<FrogJumpingService>(ctx, listen: false);
     scorePanelService = Provider.of<ScorePanelService>(ctx, listen: false);
@@ -50,16 +59,22 @@ class GameService {
     swipingGestureService.initSwipeGestureService(ctx);
 
     audioService = Provider.of<AudioService>(ctx, listen: false);
+    pondService = Provider.of<PondService>(ctx, listen: false);
   }
 
+  // reset all provided service
+  // from a single location
   void resetServices() {
     frogJumpingService.reset();
     scorePanelService.reset();
     leafService.reset();
     swipingGestureService.reset();
     audioService.reset();
+    pondService.reset();
   }
 
+  // based on the score type,
+  // increment the score value
   void addToScore(ScoreType type) {
 
     int score = 0;
@@ -123,5 +138,9 @@ class GameService {
 
   void stopAllSounds() {
     audioService.stopAllSounds();
+  }
+
+  void goToWinningPage() {
+    Utils.mainNav.currentState!.pushReplacementNamed(WinningPage.route);
   }
 }

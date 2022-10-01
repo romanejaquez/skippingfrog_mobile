@@ -41,7 +41,8 @@ class _FrogMessagePanelState extends State<FrogMessagePanel> with SingleTickerPr
 
         switch(fmService.messageType) {
           case FrogMessages.simple:
-            msg = FrogSimpleMessage(msg: fmService.message);
+            msg = FrogSimpleMessage(msg: fmService.message, 
+              hideItself: fmService.messageType == FrogMessages.simple && fmService.hideItself);
             break;
           case FrogMessages.splash:
             msg = const FrogSplashMessage();

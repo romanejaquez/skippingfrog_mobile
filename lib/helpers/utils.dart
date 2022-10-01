@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/difficulty.dart';
 import 'package:skippingfrog_mobile/helpers/leafdirection.dart';
+import 'package:skippingfrog_mobile/models/gameconfig.dart';
 import 'package:skippingfrog_mobile/models/leafmodel.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
 
@@ -11,11 +12,13 @@ class Utils {
 
   static GlobalKey<NavigatorState> mainNav = GlobalKey();
 
+  static const int slidingDurationValue = 750;
+  
   static List<LeafModel> generateGameLeafs(BuildContext context) {
 
     DifficultyService difficultyService = Provider.of<DifficultyService>(context, listen: false);
     Difficulty dif = difficultyService.difficulty;
-    int rows = dif == Difficulty.easy ? 100 : 200;
+    int rows = Utils.gameConfig[dif]!.rows;
 
     List<LeafModel> leaves = [];
 
@@ -37,6 +40,13 @@ class Utils {
 
     return leaves;
   }
+
+  static Duration slidingDuration = const Duration(milliseconds: slidingDurationValue);
+
+  static Map<Difficulty, GameConfig> gameConfig = {
+    Difficulty.easy: GameConfig(rows: 10),
+    Difficulty.hard: GameConfig(rows: 200),
+  };
 
   static void preloadImages(WidgetsBinding binding) {
     List<String> allAssets = [

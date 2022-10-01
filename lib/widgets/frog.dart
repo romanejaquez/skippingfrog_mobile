@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/swipedirection.dart';
+import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
@@ -18,19 +19,22 @@ class FrogState extends State<Frog> with TickerProviderStateMixin {
   late Timer jumpTimer;
   late AnimationController frogVerticalCtrl;
   late AnimationController frogHorizCtrl;
+  bool isFinalJump = false;
 
   @override
   void initState() {
     super.initState();
 
+    var frogDurationJump = Utils.slidingDurationValue ~/ 2;
+
     frogVerticalCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400)
+      duration: Duration(milliseconds: frogDurationJump)
     );
 
     frogHorizCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400)
+      duration: Duration(milliseconds: frogDurationJump)
     );
   }
 
@@ -41,11 +45,22 @@ class FrogState extends State<Frog> with TickerProviderStateMixin {
     frogHorizCtrl.reset();
     frogHorizCtrl.forward();
     frogVerticalCtrl.forward().whenComplete(() {
-      frogVerticalCtrl.reverse().whenComplete(() {
+
+      if (!isFinalJump) {
+        // reverse the animation and
+        // flip the image
+        frogVerticalCtrl.reverse().whenComplete(() {
+          setState(() {
+            isFrogJumping = false;
+          });
+        });
+      }
+      else {
+        // just flip the image to false
         setState(() {
           isFrogJumping = false;
         });
-      });
+      }
     });
   }
 
@@ -78,6 +93,21 @@ class FrogState extends State<Frog> with TickerProviderStateMixin {
     
     return Consumer<FrogJumpingService>(
       builder: (context, fjService, child) {
+
+        isFinalJump = fjService.isFinalJump;
+
+        if (isFinalJump) {
+          frogVerticalCtrl = AnimationController(
+            vsync: this,
+            duration: Duration(milliseconds: Utils.slidingDurationValue.toInt())
+          );
+
+          frogHorizCtrl = AnimationController(
+            vsync: this,
+            duration: Duration(milliseconds: Utils.slidingDurationValue.toInt())
+          );
+        }
+
         if (fjService.currentSwipeDirection != SwipeDirection.none) {
           triggerJump();
         }
@@ -91,8 +121,8 @@ class FrogState extends State<Frog> with TickerProviderStateMixin {
             ).animate(CurvedAnimation(parent: frogHorizCtrl, curve: Curves.easeInOut)),
             child: SlideTransition(
               position: Tween<Offset>(
-                begin: const Offset(0.0, 0.0),
-                end: const Offset(0.0, -1.0)
+                begin: Offset(0.0, fjService.frogVerticalJumpStart),
+                end: Offset(0.0, fjService.frogVerticalJumpEnd)
               ).animate(CurvedAnimation(parent: frogVerticalCtrl, curve: Curves.easeInOut)),
               child: Image.asset(
                 'assets/imgs/frog_${getFrogImageFromPosition(fjService.startFrogPosition, fjService.endFrogPosition)}.png',

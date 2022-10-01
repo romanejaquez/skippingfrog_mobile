@@ -8,7 +8,8 @@ import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 class FrogSimpleMessage extends StatefulWidget {
 
   final String msg;
-  const FrogSimpleMessage({super.key, required this.msg});
+  final bool hideItself;
+  const FrogSimpleMessage({super.key, required this.msg, required this.hideItself});
 
   @override
   State<FrogSimpleMessage> createState() => _FrogSimpleMessageState();
@@ -22,9 +23,11 @@ class _FrogSimpleMessageState extends State<FrogSimpleMessage> {
   void initState() {
     super.initState();
 
-    msgTimer = Timer(const Duration(milliseconds: 1500), () {
-      Provider.of<FrogMessagesService>(context, listen: false).setMessage(FrogMessages.none);
-    });
+    if (widget.hideItself) {
+      msgTimer = Timer(const Duration(milliseconds: 1500), () {
+        Provider.of<FrogMessagesService>(context, listen: false).setMessage(FrogMessages.none);
+      });
+    }
   }
 
   @override

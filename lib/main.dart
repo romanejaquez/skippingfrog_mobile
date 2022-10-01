@@ -8,19 +8,21 @@ import 'package:skippingfrog_mobile/pages/losingpage.dart';
 import 'package:skippingfrog_mobile/pages/optionspage.dart';
 import 'package:skippingfrog_mobile/pages/skippingfroglanding.dart';
 import 'package:skippingfrog_mobile/pages/skippingfrogsplash.dart';
+import 'package:skippingfrog_mobile/pages/winningpage.dart';
 import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
+import 'package:skippingfrog_mobile/services/pondservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
 void main() {
 
-  WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
-  Utils.preloadImages(binding);
+  //WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
+  //Utils.preloadImages(binding);
 
   runApp(
     MultiProvider(
@@ -30,6 +32,9 @@ void main() {
         ),
         Provider(
           create: (_) => AudioService()
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PondService()
         ),
         ChangeNotifierProvider(
           create: (_) => DifficultyService()
@@ -83,6 +88,7 @@ class SkippingFrogApp extends StatelessWidget {
         GamePage.route: (context) => const GamePage(),
         LeaderboardsPage.route: (context) => const LeaderboardsPage(),
         LosingPage.route: (context) => const LosingPage(),
+        WinningPage.route: (context) => const WinningPage(),
       },
     );
   }
