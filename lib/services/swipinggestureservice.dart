@@ -8,6 +8,7 @@ import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/swipedirection.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/services/audioservice.dart';
+import 'package:skippingfrog_mobile/services/bottompanelservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
@@ -27,6 +28,7 @@ class SwipingGestureService {
   late FrogMessagesService frogMessagesService;
   late LeafService leafService;
   late PondService pondService;
+  late BottomPanelService bottomPanelService;
 
   void setSwipingController(ScrollController ctrl) {
     swipeController = ctrl;
@@ -38,7 +40,8 @@ class SwipingGestureService {
     audioService = Provider.of<AudioService>(ctx, listen: false);
     frogMessagesService = Provider.of<FrogMessagesService>(ctx, listen: false);   
     leafService = Provider.of<LeafService>(ctx, listen: false);   
-    pondService = Provider.of<PondService>(ctx, listen: false);   
+    pondService = Provider.of<PondService>(ctx, listen: false);  
+    bottomPanelService = Provider.of<BottomPanelService>(ctx, listen: false); 
   }
 
   void onSwipe(SwipeDirection d) {
@@ -52,11 +55,14 @@ class SwipingGestureService {
     if(nextLeaf.direction.name == direction.name) {
       
       audioService.playSound(SkippingFrogSounds.jump, waitForSoundToFinish: true);
+      
       FrogJumpingService frogJumpingService = Provider.of<FrogJumpingService>(ctx, listen: false);
       frogJumpingService.setFrogNextJumpPosition(
         nextLeaf.index.toDouble(),
         direction
       );
+
+      bottomPanelService.advanceToNextLeafProgress();
 
       if (gameService.showPond(leafRowCount)) {
         pondService.movePond();
@@ -121,9 +127,9 @@ class SwipingGestureService {
   }
 
   void startSwipeReminder() {
-    swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
-      audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
-      frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
-    });
+    // swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
+    //   audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
+    //   frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
+    // });
   }
 }

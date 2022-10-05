@@ -10,6 +10,7 @@ import 'package:skippingfrog_mobile/models/scoreconfig.dart';
 import 'package:skippingfrog_mobile/pages/losingpage.dart';
 import 'package:skippingfrog_mobile/pages/winningpage.dart';
 import 'package:skippingfrog_mobile/services/audioservice.dart';
+import 'package:skippingfrog_mobile/services/bottompanelservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
 import 'package:skippingfrog_mobile/services/pondservice.dart';
@@ -36,6 +37,7 @@ class GameService {
   late LeafService leafService;
   late AudioService audioService;
   late PondService pondService;
+  late BottomPanelService bottomPanelService;
 
   void initGame(BuildContext context) {
     ctx = context;
@@ -61,6 +63,8 @@ class GameService {
 
     audioService = Provider.of<AudioService>(ctx, listen: false);
     pondService = Provider.of<PondService>(ctx, listen: false);
+
+    bottomPanelService = Provider.of<BottomPanelService>(ctx, listen: false);
   }
 
   // reset all provided service
@@ -72,6 +76,7 @@ class GameService {
     swipingGestureService.reset();
     audioService.reset();
     pondService.reset();
+    bottomPanelService.reset();
   }
 
   // based on the score type,
@@ -109,6 +114,7 @@ class GameService {
     var startPosition = leaves[0].index.toDouble();
     frogJumpingService.startFrogPosition = startPosition;
     frogJumpingService.endFrogPosition = startPosition;
+    bottomPanelService.resetValues(leaves.length);
   }
 
   void startGame() {

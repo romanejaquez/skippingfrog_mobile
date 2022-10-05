@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
+import 'package:skippingfrog_mobile/widgets/bottompanel.dart';
 import 'package:skippingfrog_mobile/widgets/frog.dart';
 import 'package:skippingfrog_mobile/widgets/frogmessagepanel.dart';
 import 'package:skippingfrog_mobile/widgets/gameheaderpanel.dart';
@@ -30,10 +31,7 @@ class GamePage extends StatelessWidget {
           ),
           const LillyPond(),
           const GameHeaderPanel(),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Image.asset('assets/imgs/bottom_panel.png')
-          ),
+          const BottomPanel(),
           const Frog(),
           const FrogMessagePanel(),
           const SwipingPanelRegion()
