@@ -86,11 +86,16 @@ class SwipingGestureService {
             frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'CHECKPOINT #${nextLeaf.checkpointValue} REACHED!');
           }
 
+          // check if the user has won already at the last jump
           if (leafRowCount == gameService.leaves.length) {
+
+            audioService.playSound(SkippingFrogSounds.jump, waitForSoundToFinish: true);
+            
             frogJumpingService.makeFinalJump(onFinalJumpDone: () {
               gameService.stopGameClock();
               swipeReminder.cancel();
               frogMessagesService.setMessage(FrogMessages.none);
+              audioService.playSound(SkippingFrogSounds.land, waitForSoundToFinish: true);
               gameService.goToWinningPage();
             });
           }
