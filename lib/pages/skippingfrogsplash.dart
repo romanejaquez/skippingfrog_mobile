@@ -25,9 +25,18 @@ class _SkippingFrogAppSplashState extends State<SkippingFrogAppSplash> with Sing
       duration: const Duration(seconds: 3)
     )..forward();
 
+  }
+
+  @override
+  void didChangeDependencies() {
     timer = Timer(const Duration(seconds: 3), () {
-      Utils.mainNav.currentState!.pushReplacementNamed('/landing');
+      
+      Utils.preloadImages(context).then((value) {
+        super.didChangeDependencies();
+        Utils.mainNav.currentState!.pushReplacementNamed('/landing');
+      });
     });
+    
   }
 
   @override

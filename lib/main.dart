@@ -14,6 +14,7 @@ import 'package:skippingfrog_mobile/services/bottompanelservice.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
+import 'package:skippingfrog_mobile/services/gamelocalstorage.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
 import 'package:skippingfrog_mobile/services/pondservice.dart';
@@ -22,14 +23,14 @@ import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
 void main() {
 
-  //WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
-  //Utils.preloadImages(binding);
-
   runApp(
     MultiProvider(
       providers: [
         Provider(
           create: (_) => GameService()
+        ),
+        Provider(
+          create: (_) => GameLocalStorage()
         ),
         Provider(
           create: (_) => AudioService()

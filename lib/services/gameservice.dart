@@ -12,6 +12,7 @@ import 'package:skippingfrog_mobile/pages/winningpage.dart';
 import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/bottompanelservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
+import 'package:skippingfrog_mobile/services/gamelocalstorage.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
 import 'package:skippingfrog_mobile/services/pondservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
@@ -38,6 +39,7 @@ class GameService {
   late AudioService audioService;
   late PondService pondService;
   late BottomPanelService bottomPanelService;
+  late GameLocalStorage gameLocalStorage;
 
   void initGame(BuildContext context) {
     ctx = context;
@@ -65,6 +67,8 @@ class GameService {
     pondService = Provider.of<PondService>(ctx, listen: false);
 
     bottomPanelService = Provider.of<BottomPanelService>(ctx, listen: false);
+    gameLocalStorage = Provider.of<GameLocalStorage>(ctx, listen: false);
+    gameLocalStorage.init(ctx);
   }
 
   // reset all provided service
@@ -157,5 +161,13 @@ class GameService {
 
   ScoreConfig getScoreConfig() {
     return scorePanelService.getScoreConfig();
+  }
+
+  void neverShowOnboardingAgain() {
+    gameLocalStorage.neverShowOnboardingAgain();
+  }
+
+  bool isFirstInstall() {
+    return !gameLocalStorage.isOnboardingSet();
   }
 }
