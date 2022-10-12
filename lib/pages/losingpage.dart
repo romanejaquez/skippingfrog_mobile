@@ -83,7 +83,7 @@ class _LosingPageState extends State<LosingPage> with SingleTickerProviderStateM
           children: [
             Positioned.fill(
               child: Image.asset('assets/imgs/lose_bg.png',
-                fit: BoxFit.fitHeight
+                fit: BoxFit.cover
               ),
             ),
             Center(

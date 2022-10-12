@@ -16,7 +16,7 @@ class LeaderboardsPage extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset('assets/imgs/main_bg.png',
-              fit: BoxFit.fitHeight
+              fit: BoxFit.cover
             ),
           ),
           SafeArea(

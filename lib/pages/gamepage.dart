@@ -52,7 +52,7 @@ class _GamePageState extends State<GamePage> {
         children: [
           Positioned.fill(
             child: Image.asset('assets/imgs/water_bg.png',
-              fit: BoxFit.fitHeight
+              fit: BoxFit.cover
             ),
           ),
           const LillyPond(),
