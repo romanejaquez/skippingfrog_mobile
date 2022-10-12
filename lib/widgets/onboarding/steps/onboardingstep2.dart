@@ -67,7 +67,7 @@ class _OnboardingStep2State extends State<OnboardingStep2> with TickerProviderSt
         children: [
           const Text('Eat bugs and collect points along the way!',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 30)
+            style: TextStyle(color: Colors.white, fontSize: 25)
           ),
           Expanded(
             child: SizedBox(

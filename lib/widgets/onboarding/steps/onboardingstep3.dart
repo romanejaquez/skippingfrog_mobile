@@ -62,7 +62,7 @@ class _OnboardingStep3State extends State<OnboardingStep3> with TickerProviderSt
         children: [
           const Text('Jump from leaf to leaf until reaching the end of the pond in the shortest time',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 30)
+            style: TextStyle(color: Colors.white, fontSize: 25)
           ),
           Expanded(
             child: SizedBox(

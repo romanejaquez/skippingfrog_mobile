@@ -38,7 +38,7 @@ class _OnboardingStep1State extends State<OnboardingStep1> with SingleTickerProv
         children: [
           const Text('Swipe in the direction of the leaf in turn so the frog jumps to it',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 30)
+            style: TextStyle(color: Colors.white, fontSize: 25)
           ),
           Expanded(
             child: Row(
