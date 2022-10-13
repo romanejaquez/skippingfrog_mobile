@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/difficulty.dart';
 import 'package:skippingfrog_mobile/helpers/leafdirection.dart';
@@ -134,5 +135,10 @@ class Utils {
     });
 
     return preloadCompleter.future;
+  }
+
+  static String formatTimeAsString(Duration time) {
+    var timeAsDate = DateTime(2020, 1, 1).add(time);
+    return DateFormat.Hms().format(timeAsDate);
   }
 }

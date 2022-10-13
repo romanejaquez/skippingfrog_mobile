@@ -1,7 +1,7 @@
 class ScoreConfig {
   final int bugs;
   final int score;
-  final DateTime time;
+  final Duration time;
   final String timeAsString;
 
   ScoreConfig({
