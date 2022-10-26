@@ -46,7 +46,7 @@ class _BottomPanelState extends State<BottomPanel> with SingleTickerProviderStat
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         color: Colors.black.withOpacity(0.5)

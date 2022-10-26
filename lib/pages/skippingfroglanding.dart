@@ -80,7 +80,7 @@ class _SkippingFrogLandingState extends State<SkippingFrogLanding> with SingleTi
         children: [
           Positioned.fill(
             child: Image.asset('assets/imgs/main_bg.png',
-              fit: BoxFit.fitHeight
+              fit: BoxFit.cover
             ),
           ),
           Center(
