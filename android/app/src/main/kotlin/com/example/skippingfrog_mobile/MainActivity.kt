@@ -1,4 +1,4 @@
-package com.example.skippingfrog_mobile
+package com.drcoderz.skippingfrog
 
 import io.flutter.embedding.android.FlutterActivity
 

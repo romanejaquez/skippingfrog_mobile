@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/firebase_options.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/pages/gamepage.dart';
 import 'package:skippingfrog_mobile/pages/helppage.dart';
@@ -16,12 +18,19 @@ import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 import 'package:skippingfrog_mobile/services/gamelocalstorage.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
+import 'package:skippingfrog_mobile/services/leaderboardservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
+import 'package:skippingfrog_mobile/services/loginservice.dart';
 import 'package:skippingfrog_mobile/services/pondservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
-void main() {
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     MultiProvider(
@@ -34,6 +43,9 @@ void main() {
         ),
         Provider(
           create: (_) => AudioService()
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LeaderboardService()
         ),
         ChangeNotifierProvider(
           create: (_) => BottomPanelService()
@@ -58,6 +70,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => ScorePanelService()
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LoginService()
         )
       ],
       child: const SkippingFrogApp(),

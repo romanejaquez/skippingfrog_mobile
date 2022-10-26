@@ -26,7 +26,7 @@ class _OnboardingStep2State extends State<OnboardingStep2> with TickerProviderSt
       vsync: this,
       lowerBound: 00,
       upperBound: 190,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1400),
     )..repeat(reverse: true);
 
     bugCtrl = AnimationController(
@@ -39,13 +39,14 @@ class _OnboardingStep2State extends State<OnboardingStep2> with TickerProviderSt
       duration: const Duration(milliseconds: 200)
     );
 
-    animTimer = Timer.periodic(const Duration(milliseconds: 1500), (timer) {
-      scoreCtrl.repeat(reverse: true);
-      bugCtrl.forward().then((value) {
-        scoreCtrl.reset();
-        bugCtrl.reset();
-      });
-    });
+    // animTimer = Timer.periodic(const Duration(milliseconds: 1500), (timer) {
+    //   scoreCtrl.repeat(reverse: true);
+    //   bugCtrl.forward().then((value) {
+    //     scoreCtrl.reset();
+    //     bugCtrl.reset();
+
+    //   });
+    // });
   }
 
   @override
@@ -67,7 +68,7 @@ class _OnboardingStep2State extends State<OnboardingStep2> with TickerProviderSt
         children: [
           const Text('Eat bugs and collect points along the way!',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 30)
+            style: TextStyle(color: Colors.white, fontSize: 25)
           ),
           Expanded(
             child: SizedBox(

@@ -170,4 +170,12 @@ class GameService {
   bool isFirstInstall() {
     return !gameLocalStorage.isOnboardingSet();
   }
+
+  ScoreConfig getScoreData() {
+    return gameLocalStorage.getScoreData();
+  }
+
+  void saveScoreData() {
+    gameLocalStorage.saveScoreData(getScoreConfig());
+  }
 }

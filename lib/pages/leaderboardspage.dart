@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
+import 'package:skippingfrog_mobile/models/playermodel.dart';
+import 'package:skippingfrog_mobile/models/scoreconfig.dart';
+import 'package:skippingfrog_mobile/services/gameservice.dart';
+import 'package:skippingfrog_mobile/services/leaderboardservice.dart';
+import 'package:skippingfrog_mobile/widgets/leaderboardlist.dart';
+import 'package:skippingfrog_mobile/widgets/leaderboardloading.dart';
+import 'package:skippingfrog_mobile/widgets/leaderboardscorepanel.dart';
+import 'package:skippingfrog_mobile/widgets/leaderboardspanel.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class LeaderboardsPage extends StatelessWidget {
@@ -8,9 +17,9 @@ class LeaderboardsPage extends StatelessWidget {
 
   const LeaderboardsPage({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Stack(
         children: [
@@ -27,7 +36,18 @@ class LeaderboardsPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 40, top: 10, right: 40),
                   child: Image.asset('assets/imgs/leaderboards_title.png'),
                 ),
-                const Spacer(),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: const [
+                        LeaderboardScorePanel(),
+                        SizedBox(height: 10),
+                        LeaderboardsPanel()
+                      ],
+                    ),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "422287768695",
+    "project_id": "skippingfrog",
+    "storage_bucket": "skippingfrog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422287768695:android:bd8251bf46939afa889a72",
+        "android_client_info": {
+          "package_name": "com.drcoderz.skippingfrog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422287768695-rqc2navca19i4cumiarajhqobgae03oi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3pWV8b-0eODxuWfLqcDf2flL2p6wi4-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422287768695-rqc2navca19i4cumiarajhqobgae03oi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "422287768695-btm7fqq5v0q3ml46dn2hb7n7ijgji1c7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.skippingfrogMobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

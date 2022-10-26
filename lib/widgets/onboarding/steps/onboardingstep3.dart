@@ -62,7 +62,7 @@ class _OnboardingStep3State extends State<OnboardingStep3> with TickerProviderSt
         children: [
           const Text('Jump from leaf to leaf until reaching the end of the pond in the shortest time',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 30)
+            style: TextStyle(color: Colors.white, fontSize: 25)
           ),
           Expanded(
             child: SizedBox(
@@ -73,7 +73,7 @@ class _OnboardingStep3State extends State<OnboardingStep3> with TickerProviderSt
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: SlideTransition(
-                      position: Tween<Offset>(begin: Offset.zero, end: const Offset(8, 0))
+                      position: Tween<Offset>(begin: Offset.zero, end: const Offset(7, 0))
                       .animate(CurvedAnimation(parent: frogJump, curve: Curves.easeInOut)),
                       child: SlideTransition(
                         position: Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1))

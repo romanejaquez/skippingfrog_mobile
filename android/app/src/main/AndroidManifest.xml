@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.skippingfrog_mobile">
+    package="com.drcoderz.skippingfrog">
    <application
-        android:label="skippingfrog_mobile"
+        android:label="Skipping Frog"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

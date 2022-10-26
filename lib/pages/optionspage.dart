@@ -32,51 +32,39 @@ class OptionsPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(30),
-                            child: Image.asset('assets/imgs/difficulty_panel.png',
+                      Container(
+                        margin: const EdgeInsets.only(top: 40),
+                        padding: const EdgeInsets.all(30),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(30)
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.toggle_off_outlined, color: Colors.white, size: 50),
+                                const SizedBox(width: 10),
+                                Text('Mute All Sounds', style: TextStyle(color: Colors.white, fontSize: 20))
+                              ],
                             ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 120),
-                              child: Consumer<DifficultyService>(
-                                builder: (context, difficultyService, child) {
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SkippingFrogButton(
-                                        toggle: difficultyService.difficulty == Difficulty.easy,
-                                        width: 180,
-                                        height: 100,
-                                        on: 'btn_easy_on',
-                                        off: 'btn_easy_off',
-                                        onTap: () {
-                                          difficultyService.setGameDifficulty(Difficulty.easy);
-                                        }
-                                      ),
-                                      SkippingFrogButton(
-                                        toggle: difficultyService.difficulty == Difficulty.hard,
-                                        width: 180,
-                                        height: 100,
-                                        on: 'btn_hard_on',
-                                        off: 'btn_hard_off',
-                                        onTap: () {
-                                          difficultyService.setGameDifficulty(Difficulty.hard);
-                                        }
-                                      ),
-                                    ],
-                                  );
-                                }
-                              ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.delete_forever, color: Colors.white, size: 40),
+                                const SizedBox(width: 10),
+                                Text('Clear all Game Data', style: TextStyle(color: Colors.white, fontSize: 20))
+                              ],
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
+                      const SizedBox(height: 40),
                       SkippingFrogButton(
                         width: 350,
                         height: 100,
