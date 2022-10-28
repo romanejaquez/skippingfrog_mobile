@@ -70,7 +70,7 @@ class LeaderboardScorePanel extends StatelessWidget {
                       backgroundColor: Colors.black.withOpacity(0.5),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60))
                     ),
-                    onPressed: leaderboardService.canSubmitScore(context) ? 
+                    onPressed: leaderboardService.canSubmitScore(context, score) ? 
                     () {
                       leaderboardService.submitScore(score, context);
                     } : null, 

@@ -4,7 +4,6 @@ import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/models/playermodel.dart';
 import 'package:skippingfrog_mobile/models/scoreconfig.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
-import 'package:skippingfrog_mobile/services/leaderboardservice.dart';
 import 'package:skippingfrog_mobile/widgets/leaderboardlist.dart';
 import 'package:skippingfrog_mobile/widgets/leaderboardloading.dart';
 import 'package:skippingfrog_mobile/widgets/leaderboardscorepanel.dart';

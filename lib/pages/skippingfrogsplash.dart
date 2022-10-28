@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
+import 'package:skippingfrog_mobile/services/loggerservice.dart';
 
 class SkippingFrogAppSplash extends StatefulWidget {
 
@@ -25,6 +26,7 @@ class _SkippingFrogAppSplashState extends State<SkippingFrogAppSplash> with Sing
       duration: const Duration(seconds: 3)
     )..forward();
 
+    Logger.message('loading splash screen');
   }
 
   @override

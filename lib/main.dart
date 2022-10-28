@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/firebase_options.dart';
@@ -20,6 +23,7 @@ import 'package:skippingfrog_mobile/services/gamelocalstorage.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/leaderboardservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
+import 'package:skippingfrog_mobile/services/loggerservice.dart';
 import 'package:skippingfrog_mobile/services/loginservice.dart';
 import 'package:skippingfrog_mobile/services/pondservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
@@ -27,57 +31,63 @@ import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
 
 void main() async {
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  runApp(
-    MultiProvider(
-      providers: [
-        Provider(
-          create: (_) => GameService()
-        ),
-        Provider(
-          create: (_) => GameLocalStorage()
-        ),
-        Provider(
-          create: (_) => AudioService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => LeaderboardService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => BottomPanelService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => PondService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => DifficultyService()
-        ),
-        Provider(
-          create: (_) => SwipingGestureService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => FrogJumpingService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => LeafService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => FrogMessagesService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ScorePanelService()
-        ),
-        ChangeNotifierProvider(
-          create: (_) => LoginService()
-        )
-      ],
-      child: const SkippingFrogApp(),
-    )
-  );
+    // The following lines are the same as previously explained in "Handling uncaught errors"
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    Logger.initialize(FirebaseCrashlytics.instance);
+
+    runApp(
+      MultiProvider(
+        providers: [
+          Provider(
+            create: (_) => GameService()
+          ),
+          Provider(
+            create: (_) => GameLocalStorage()
+          ),
+          Provider(
+            create: (_) => AudioService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => LeaderboardService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => BottomPanelService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => PondService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => DifficultyService()
+          ),
+          Provider(
+            create: (_) => SwipingGestureService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => FrogJumpingService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => LeafService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => FrogMessagesService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ScorePanelService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => LoginService()
+          )
+        ],
+        child: const SkippingFrogApp(),
+      )
+    );
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
 class SkippingFrogApp extends StatelessWidget {

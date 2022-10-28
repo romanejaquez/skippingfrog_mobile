@@ -39,14 +39,14 @@ class LeaderboardService extends ChangeNotifier {
     return playersCompleter.future;
   }
 
-  bool canSubmitScore(BuildContext context) {
+  // check if the user can submit score
+  bool canSubmitScore(BuildContext context, ScoreConfig scoreConfig) {
     LoginService loginService = Provider.of<LoginService>(context, listen: false);
-    GameService gameService = Provider.of<GameService>(context, listen: false);
-    ScoreConfig scoreConfig = gameService.getScoreData();
 
     return loginService.isUserLoggedIn() && scoreConfig.score > 0;
   }
 
+  // submit the user score
   Future<void> submitScore(ScoreConfig config, BuildContext context) async {
     LoginService loginService = Provider.of<LoginService>(context, listen: false);
 
@@ -56,7 +56,7 @@ class LeaderboardService extends ChangeNotifier {
     await firestore.collection('leaderboard').doc(userId).set({
       'name': playerName,
       'score': config.score,
-      'timestamp': config.time.inSeconds
+      'timeInSeconds': config.time.inSeconds
     });
     cachedPlayers.clear();
     notifyListeners();
