@@ -25,6 +25,7 @@ import 'package:skippingfrog_mobile/services/leaderboardservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
 import 'package:skippingfrog_mobile/services/loggerservice.dart';
 import 'package:skippingfrog_mobile/services/loginservice.dart';
+import 'package:skippingfrog_mobile/services/onboardingservice.dart';
 import 'package:skippingfrog_mobile/services/pondservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
@@ -53,6 +54,9 @@ void main() async {
           Provider(
             create: (_) => AudioService()
           ),
+          Provider(
+            create: (_) => SwipingGestureService()
+          ),
           ChangeNotifierProvider(
             create: (_) => LeaderboardService()
           ),
@@ -65,9 +69,7 @@ void main() async {
           ChangeNotifierProvider(
             create: (_) => DifficultyService()
           ),
-          Provider(
-            create: (_) => SwipingGestureService()
-          ),
+          
           ChangeNotifierProvider(
             create: (_) => FrogJumpingService()
           ),
@@ -82,6 +84,9 @@ void main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => LoginService()
+          ),
+          ChangeNotifierProvider(
+            create: (_) => OnboardingService()
           )
         ],
         child: const SkippingFrogApp(),

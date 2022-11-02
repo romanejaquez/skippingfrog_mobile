@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
+import 'package:skippingfrog_mobile/widgets/onboarding/onboardingwidget.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class HelpPage extends StatelessWidget {
@@ -30,7 +31,12 @@ class HelpPage extends StatelessWidget {
                     fit: BoxFit.contain
                   ),
                 ),
-                const Spacer(),
+                const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: OnboardingWidget(showButtonPanel: false),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
