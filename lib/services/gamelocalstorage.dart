@@ -9,19 +9,30 @@ class GameLocalStorage {
   // shared prefs keys
   static const String onboarding = 'onboarding';
   static const String scoreData = 'scoreData';
+  static const String muteSounds = 'muteAllSounds';
 
   late SharedPreferences prefs;
   late BuildContext ctx;
 
-  void init(BuildContext context) {
+  void init(BuildContext context, Function callback) {
     ctx = context;
     SharedPreferences.getInstance().then((sp) {
       prefs = sp;
+      callback();
     });
   }
 
   void saveData() {
     // save other data
+  }
+
+  void toggleMuteSounds(bool mute) {
+    prefs.setBool(GameLocalStorage.muteSounds, mute);
+  }
+
+  bool areAllSoundsMute() {
+    return prefs.getBool(GameLocalStorage.muteSounds) != null && 
+      !prefs.getBool(GameLocalStorage.muteSounds)!;
   }
 
   void neverShowOnboardingAgain() {

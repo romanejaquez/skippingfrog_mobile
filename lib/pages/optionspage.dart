@@ -4,6 +4,7 @@ import 'package:skippingfrog_mobile/helpers/difficulty.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
+import 'package:skippingfrog_mobile/services/optionsservice.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class OptionsPage extends StatelessWidget {
@@ -31,50 +32,60 @@ class OptionsPage extends StatelessWidget {
                   height: 80,
                 ),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 40),
-                        padding: const EdgeInsets.all(30),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(30)
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
+                  child: Consumer<OptionsService>(
+                    builder: (context, optionsService, child) {
+                      
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 40),
+                            padding: const EdgeInsets.all(30),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(30)
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(Icons.toggle_off_outlined, color: Colors.white, size: 50),
-                                const SizedBox(width: 10),
-                                Text('Mute All Sounds', style: TextStyle(color: Colors.white, fontSize: 20))
+                                GestureDetector(
+                                  onTap: () {
+                                    optionsService.toggleMute();
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(optionsService.muteAllSoundsSelected ? Icons.toggle_on_outlined : Icons.toggle_off_outlined, color: Colors.white, size: 50),
+                                      const SizedBox(width: 10),
+                                      const Text('Mute All Sounds', style: TextStyle(color: Colors.white, fontSize: 20))
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    Icon(Icons.delete_forever, color: Colors.white, size: 40),
+                                    SizedBox(width: 10),
+                                    Text('Clear all Game Data', style: TextStyle(color: Colors.white, fontSize: 20))
+                                  ],
+                                ),
                               ],
                             ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.delete_forever, color: Colors.white, size: 40),
-                                const SizedBox(width: 10),
-                                Text('Clear all Game Data', style: TextStyle(color: Colors.white, fontSize: 20))
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                      SkippingFrogButton(
-                        width: 350,
-                        height: 100,
-                        on: 'btn_viewlb_on',
-                        off: 'btn_viewlb_off',
-                        onTap: () {
-                          Utils.mainNav.currentState!.pushNamed(LeaderboardsPage.route);
-                        }
-                      )
-                    ]
+                          ),
+                          const SizedBox(height: 40),
+                          SkippingFrogButton(
+                            width: 350,
+                            height: 100,
+                            on: 'btn_viewlb_on',
+                            off: 'btn_viewlb_off',
+                            onTap: () {
+                              optionsService.navigateToLeaderboards();
+                            }
+                          )
+                        ]
+                      );
+                    }
                   )
                 ),
                 Row(

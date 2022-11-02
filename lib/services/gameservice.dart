@@ -14,6 +14,7 @@ import 'package:skippingfrog_mobile/services/bottompanelservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
 import 'package:skippingfrog_mobile/services/gamelocalstorage.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
+import 'package:skippingfrog_mobile/services/optionsservice.dart';
 import 'package:skippingfrog_mobile/services/pondservice.dart';
 import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/services/swipinggestureservice.dart';
@@ -40,6 +41,7 @@ class GameService {
   late PondService pondService;
   late BottomPanelService bottomPanelService;
   late GameLocalStorage gameLocalStorage;
+  late OptionsService optionsService;
 
   void initGame(BuildContext context) {
     ctx = context;
@@ -64,11 +66,16 @@ class GameService {
     swipingGestureService.initSwipeGestureService(ctx);
 
     audioService = Provider.of<AudioService>(ctx, listen: false);
+    audioService.init(ctx);
+
     pondService = Provider.of<PondService>(ctx, listen: false);
 
     bottomPanelService = Provider.of<BottomPanelService>(ctx, listen: false);
     gameLocalStorage = Provider.of<GameLocalStorage>(ctx, listen: false);
-    gameLocalStorage.init(ctx);
+    gameLocalStorage.init(ctx, () {
+      optionsService = Provider.of<OptionsService>(ctx, listen: false);
+      optionsService.init(ctx);
+    });
   }
 
   // reset all provided service
@@ -177,5 +184,13 @@ class GameService {
 
   void saveScoreData() {
     gameLocalStorage.saveScoreData(getScoreConfig());
+  }
+
+  bool areAllSoundsMute() {
+    return gameLocalStorage.areAllSoundsMute();
+  }
+
+  void toggleMuteSounds(bool mute) {
+    gameLocalStorage.toggleMuteSounds(mute);
   }
 }
