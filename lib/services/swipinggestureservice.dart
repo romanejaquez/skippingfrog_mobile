@@ -132,9 +132,9 @@ class SwipingGestureService {
   }
 
   void startSwipeReminder() {
-    // swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
-    //   audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
-    //   frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
-    // });
+    swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
+      audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
+      frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
+    });
   }
 }

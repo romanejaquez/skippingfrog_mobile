@@ -73,7 +73,7 @@ class _OnboardingStep3State extends State<OnboardingStep3> with TickerProviderSt
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: SlideTransition(
-                      position: Tween<Offset>(begin: Offset.zero, end: const Offset(7, 0))
+                      position: Tween<Offset>(begin: Offset.zero, end: const Offset(8, 0))
                       .animate(CurvedAnimation(parent: frogJump, curve: Curves.easeInOut)),
                       child: SlideTransition(
                         position: Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1))

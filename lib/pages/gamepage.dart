@@ -37,7 +37,7 @@ class _GamePageState extends State<GamePage> {
           useRootNavigator: true,
           enableDrag: true,
           builder: ((context) {
-          return const OnboardingWidget();
+          return OnboardingWidget();
         })).then((value) {
           gameService.startGame();
         });
