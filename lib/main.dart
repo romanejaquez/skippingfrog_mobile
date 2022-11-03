@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/firebase_options.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
@@ -96,6 +97,11 @@ class SkippingFrogApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+      
     return MaterialApp(
       navigatorKey: Utils.mainNav,
       theme: ThemeData(

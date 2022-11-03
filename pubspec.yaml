@@ -43,6 +43,15 @@ dependencies:
   google_sign_in: ^5.4.2
   firebase_auth: ^3.11.2
   firebase_crashlytics: ^2.9.0
+  icons_launcher: ^2.0.5
+
+icons_launcher:
+  image_path: 'assets/imgs/skippingfrog_icon.png'
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
 
 dev_dependencies:
   flutter_test:
