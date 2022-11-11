@@ -53,6 +53,7 @@ class _WinningPageState extends State<WinningPage> with SingleTickerProviderStat
   Widget build(BuildContext context) {
 
     ScoreConfig scoreConfig = gameService.getScoreConfig();
+    gameService.saveScoreData();
     
     List<Widget> scoreConfigPanelItems = [
       Column(
@@ -96,7 +97,6 @@ class _WinningPageState extends State<WinningPage> with SingleTickerProviderStat
         on: 'btn_win_submit_on',
         off: 'btn_win_submit_off',
         onTap: () {
-          gameService.saveScoreData();
           gameService.resetGame();
           Utils.mainNav.currentState!.pushReplacementNamed(LeaderboardsPage.route);
         }

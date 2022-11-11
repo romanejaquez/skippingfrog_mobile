@@ -193,4 +193,8 @@ class GameService {
   void toggleMuteSounds(bool mute) {
     gameLocalStorage.toggleMuteSounds(mute);
   }
+
+  Future<void> clearAllGameData() async {
+    await gameLocalStorage.clearAllGameData();
+  }
 }

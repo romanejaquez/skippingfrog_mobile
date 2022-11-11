@@ -22,6 +22,7 @@ class SwipingGestureService {
   int leafRowCount = 1;
   Timer swipeReminder = Timer(Duration.zero, () {});
   late BuildContext ctx;
+  bool jumpingInProgress = false;
 
   late GameService gameService;
   late AudioService audioService;
@@ -45,6 +46,12 @@ class SwipingGestureService {
   }
 
   void onSwipe(SwipeDirection d) {
+
+    // prevent from swiping twice while during a jump
+    if (jumpingInProgress) {
+      return;
+    }
+    
     direction = d;
     
     // reset swipe reminder - the user has swiped
@@ -54,6 +61,7 @@ class SwipingGestureService {
 
     if(nextLeaf.direction.name == direction.name) {
       
+      jumpingInProgress = true;
       audioService.playSound(SkippingFrogSounds.jump, waitForSoundToFinish: true);
       
       FrogJumpingService frogJumpingService = Provider.of<FrogJumpingService>(ctx, listen: false);
@@ -70,6 +78,7 @@ class SwipingGestureService {
 
       swipeController!.animateTo(gameService.leafDimension * leafRowCount, duration: Utils.slidingDuration, curve: Curves.easeOut).then((value) {
 
+          jumpingInProgress = false;
           audioService.playSound(SkippingFrogSounds.land, waitForSoundToFinish: true);
           direction = SwipeDirection.none;
           frogJumpingService.resetDirection();
@@ -132,9 +141,9 @@ class SwipingGestureService {
   }
 
   void startSwipeReminder() {
-    swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
-      audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
-      frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
-    });
+    // swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
+    //   audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
+    //   frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
+    // });
   }
 }

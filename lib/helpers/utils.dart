@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/difficulty.dart';
+import 'package:skippingfrog_mobile/helpers/enums.dart';
 import 'package:skippingfrog_mobile/helpers/leafdirection.dart';
 import 'package:skippingfrog_mobile/models/gameconfig.dart';
 import 'package:skippingfrog_mobile/models/leafmodel.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
+import 'package:skippingfrog_mobile/widgets/basicalert.dart';
 
 class Utils {
 
@@ -140,5 +142,29 @@ class Utils {
   static String formatTimeAsString(Duration time) {
     var timeAsDate = DateTime(2020, 1, 1).add(time);
     return DateFormat.Hms().format(timeAsDate);
+  }
+
+  static void showModalAlertDialog(BuildContext context,
+    Function onSelectedAlertOption,
+    { String title = '', 
+      String message = '', 
+      List<AlertOptions> options = const [AlertOptions.ok]
+    }
+  ) {
+        showDialog(
+          useSafeArea: true,
+          barrierDismissible: false,
+          context: context,
+          builder: (cxt) {
+          
+          return BasicAlert(
+            title: title,
+            message: message,
+            options: options,
+            onSelectedOption: (AlertOptions o) {
+              onSelectedAlertOption(o);
+            },
+          );
+      });
   }
 }

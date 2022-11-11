@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/difficulty.dart';
+import 'package:skippingfrog_mobile/helpers/enums.dart';
+import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/pages/leaderboardspage.dart';
+import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/difficultyservice.dart';
+import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/optionsservice.dart';
 import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
@@ -15,6 +19,10 @@ class OptionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var audioService = Provider.of<AudioService>(context, listen: false);
+    var gameService = Provider.of<GameService>(context, listen: false);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -50,6 +58,10 @@ class OptionsPage extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
+                                    audioService.playSound(
+                                      SkippingFrogSounds.ribbit, 
+                                      waitForSoundToFinish: true
+                                    );
                                     optionsService.toggleMute();
                                   },
                                   child: Row(
@@ -62,13 +74,34 @@ class OptionsPage extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 20),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: const [
-                                    Icon(Icons.delete_forever, color: Colors.white, size: 40),
-                                    SizedBox(width: 10),
-                                    Text('Clear all Game Data', style: TextStyle(color: Colors.white, fontSize: 20))
-                                  ],
+                                GestureDetector(
+                                  onTap: () {
+                                    audioService.playSound(
+                                      SkippingFrogSounds.ribbit, 
+                                      waitForSoundToFinish: true
+                                    );
+
+                                    Utils.showModalAlertDialog(context,
+                                      title: 'Clear All Game Data',
+                                      message: 'All Game Data stored locally will be wiped out. Are you sure about this?',
+                                      options: [AlertOptions.yes, AlertOptions.no],
+                                      (AlertOptions selectedOption) async {
+
+                                        // clear all game data if the user said 'yes'
+                                        if (selectedOption == AlertOptions.yes) {
+                                          await gameService.clearAllGameData();
+                                        }
+                                      }
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const [
+                                      Icon(Icons.delete_forever, color: Colors.white, size: 40),
+                                      SizedBox(width: 10),
+                                      Text('Clear all Game Data', style: TextStyle(color: Colors.white, fontSize: 20))
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

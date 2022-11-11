@@ -61,4 +61,8 @@ class GameLocalStorage {
       timeAsString: '00:00:00'
     );
   }
+
+  Future<void> clearAllGameData() async {
+    await prefs.remove(GameLocalStorage.scoreData);
+  }
 }
