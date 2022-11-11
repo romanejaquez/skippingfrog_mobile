@@ -26,6 +26,7 @@ class _WinningPageState extends State<WinningPage> with SingleTickerProviderStat
 
   late GameService gameService;
   late AudioService audioService;
+
   @override
   void initState() {
     super.initState();
@@ -104,10 +105,7 @@ class _WinningPageState extends State<WinningPage> with SingleTickerProviderStat
     ];
 
     return WillPopScope(
-      onWillPop: () async {
-        audioService.stopAllSounds();
-        return Future.value(true);
-      },
+      onWillPop: () async => false,
       child: Scaffold(
         body: Stack(
           children: [

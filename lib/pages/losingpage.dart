@@ -74,10 +74,7 @@ class _LosingPageState extends State<LosingPage> with SingleTickerProviderStateM
     ];
 
     return WillPopScope(
-      onWillPop: () async {
-        audioService.stopAllSounds();
-        return Future.value(true);
-      },
+      onWillPop: () async => false,
       child: Scaffold(
         body: Stack(
           children: [
