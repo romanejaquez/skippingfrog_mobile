@@ -1,40 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:skippingfrog_mobile/helpers/frogmessages.dart';
-import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 
-class FrogSimpleMessage extends StatefulWidget {
-
-  final String msg;
-  final bool hideItself;
-  const FrogSimpleMessage({super.key, required this.msg, required this.hideItself});
-
-  @override
-  State<FrogSimpleMessage> createState() => _FrogSimpleMessageState();
-}
-
-class _FrogSimpleMessageState extends State<FrogSimpleMessage> {
-
-  late Timer msgTimer = Timer(Duration.zero, () {});
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.hideItself) {
-      msgTimer = Timer(const Duration(milliseconds: 1500), () {
-        Provider.of<FrogMessagesService>(context, listen: false).setMessage(FrogMessages.none);
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    msgTimer.cancel();
-    super.dispose();
-  }
+class FrogPauseMessage extends StatelessWidget {
+  const FrogPauseMessage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +25,8 @@ class _FrogSimpleMessageState extends State<FrogSimpleMessage> {
                   bottomRight: Radius.circular(20)
                 )
               ),
-              child: Text(widget.msg,
-                  style: const TextStyle(color: Colors.white,
+              child: const Text('GAME PAUSED',
+                  style: TextStyle(color: Colors.white,
                     fontSize: 20
                   )
                 ),

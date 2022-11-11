@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/models/scoreconfig.dart';
 
@@ -12,9 +11,9 @@ class ScorePanelService extends ChangeNotifier {
     Timer gameTimer = Timer(Duration.zero, () {});
     String timeAsString = "00:00:00";
     Duration time = Duration.zero;
+    bool isTimePaused = false;
 
     void startTime() {
-
       gameTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
         // update the time
         time = Duration(seconds: time.inSeconds + 1);
@@ -36,7 +35,34 @@ class ScorePanelService extends ChangeNotifier {
       );
     }
 
-    void pauseTime() {}
+    void pauseGame() {
+      isTimePaused = true;
+
+      if (isTimePaused) {
+        gameTimer.cancel();
+      }
+
+      notifyListeners();
+    }
+
+    void unpauseGame() {
+      isTimePaused = false;
+
+      startTime();
+      notifyListeners();
+    }
+
+    void togglePause() {
+      isTimePaused = !isTimePaused;
+
+      if (isTimePaused) {
+        gameTimer.cancel();
+      }
+      else {
+        startTime();
+      }
+      notifyListeners();
+    }
 
     void addToScore(int scoreValue) {
       score += scoreValue;
@@ -65,5 +91,6 @@ class ScorePanelService extends ChangeNotifier {
       gameTimer.cancel();
       timeAsString = "00:00:00";
       time = Duration.zero;
+      isTimePaused = false;
     }
 }

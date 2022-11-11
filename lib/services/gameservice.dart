@@ -12,6 +12,7 @@ import 'package:skippingfrog_mobile/pages/winningpage.dart';
 import 'package:skippingfrog_mobile/services/audioservice.dart';
 import 'package:skippingfrog_mobile/services/bottompanelservice.dart';
 import 'package:skippingfrog_mobile/services/frogjumpingservice.dart';
+import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 import 'package:skippingfrog_mobile/services/gamelocalstorage.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
 import 'package:skippingfrog_mobile/services/optionsservice.dart';
@@ -34,6 +35,7 @@ class GameService {
 
   // services to query
   late FrogJumpingService frogJumpingService;
+  late FrogMessagesService frogMessagesService;
   late SwipingGestureService swipingGestureService;
   late ScorePanelService scorePanelService;
   late LeafService leafService;
@@ -76,12 +78,15 @@ class GameService {
       optionsService = Provider.of<OptionsService>(ctx, listen: false);
       optionsService.init(ctx);
     });
+
+    frogMessagesService = Provider.of<FrogMessagesService>(ctx, listen: false);
   }
 
   // reset all provided service
   // from a single location
   void resetServices() {
     frogJumpingService.reset();
+    frogMessagesService.reset();
     scorePanelService.reset();
     leafService.reset();
     swipingGestureService.reset();

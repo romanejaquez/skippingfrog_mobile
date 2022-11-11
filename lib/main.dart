@@ -117,7 +117,7 @@ class SkippingFrogApp extends StatelessWidget {
         fontFamily: 'Dimitri'
       ),
       builder: (BuildContext context, Widget? child) {
-
+    
         // initialize the game service
         GameService gameService = Provider.of<GameService>(context, listen: false);
         gameService.initGame(context);

@@ -26,7 +26,6 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
 
     GameService gameService = Provider.of<GameService>(context, listen: false);
-    
 
     if (gameService.isFirstInstall()) {
       Future.delayed(const Duration(milliseconds: 200), () {
@@ -37,7 +36,7 @@ class _GamePageState extends State<GamePage> {
           useRootNavigator: true,
           enableDrag: true,
           builder: ((context) {
-          return OnboardingWidget();
+          return const OnboardingWidget();
         })).then((value) {
           gameService.startGame();
         });
@@ -47,22 +46,25 @@ class _GamePageState extends State<GamePage> {
       gameService.startGame();
     }
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset('assets/imgs/water_bg.png',
-              fit: BoxFit.cover
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset('assets/imgs/water_bg.png',
+                fit: BoxFit.cover
+              ),
             ),
-          ),
-          const LillyPond(),
-          const GameHeaderPanel(),
-          const BottomPanel(),
-          const Frog(),
-          const FrogMessagePanel(),
-          const SwipingPanelRegion()
-        ]
-      )
+            const LillyPond(),
+            const GameHeaderPanel(),
+            const BottomPanel(),
+            const Frog(),
+            const FrogMessagePanel(),
+            const SwipingPanelRegion()
+          ]
+        )
+      ),
     );
   }
 }

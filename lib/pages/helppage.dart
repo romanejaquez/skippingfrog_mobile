@@ -33,7 +33,7 @@ class HelpPage extends StatelessWidget {
                 ),
                 const Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(20),
                     child: OnboardingWidget(showButtonPanel: false),
                   ),
                 ),

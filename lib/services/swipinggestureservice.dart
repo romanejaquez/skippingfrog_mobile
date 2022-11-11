@@ -14,6 +14,7 @@ import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/leafservice.dart';
 import 'package:skippingfrog_mobile/services/pondservice.dart';
+import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 
 class SwipingGestureService {
 
@@ -30,6 +31,7 @@ class SwipingGestureService {
   late LeafService leafService;
   late PondService pondService;
   late BottomPanelService bottomPanelService;
+  late ScorePanelService scorePanelService;
 
   void setSwipingController(ScrollController ctrl) {
     swipeController = ctrl;
@@ -43,19 +45,20 @@ class SwipingGestureService {
     leafService = Provider.of<LeafService>(ctx, listen: false);   
     pondService = Provider.of<PondService>(ctx, listen: false);  
     bottomPanelService = Provider.of<BottomPanelService>(ctx, listen: false); 
+    scorePanelService = Provider.of<ScorePanelService>(ctx, listen: false); 
   }
 
   void onSwipe(SwipeDirection d) {
 
+    // reset swipe reminder - the user has swiped
+    resetSwipeReminder();
+
     // prevent from swiping twice while during a jump
-    if (jumpingInProgress) {
+    if (jumpingInProgress || scorePanelService.isTimePaused) {
       return;
     }
     
     direction = d;
-    
-    // reset swipe reminder - the user has swiped
-    resetSwipeReminder();
 
     var nextLeaf = gameService.leaves[leafRowCount];
 
@@ -141,9 +144,11 @@ class SwipingGestureService {
   }
 
   void startSwipeReminder() {
-    // swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
-    //   audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
-    //   frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
-    // });
+    if (!scorePanelService.isTimePaused) {
+      swipeReminder = Timer.periodic(const Duration(seconds: 5), (timer) {
+        audioService.playSound(SkippingFrogSounds.alert, waitForSoundToFinish: true);
+        frogMessagesService.setMessage(FrogMessages.simple, msgContent: 'MAKE A MOVE!!');
+      });
+    }
   }
 }

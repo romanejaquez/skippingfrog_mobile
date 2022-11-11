@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/frogmessages.dart';
 import 'package:skippingfrog_mobile/services/frogmessageservice.dart';
+import 'package:skippingfrog_mobile/widgets/frogpausemessage.dart';
 import 'package:skippingfrog_mobile/widgets/frogsimplemessage.dart';
 import 'package:skippingfrog_mobile/widgets/frogsplashmessage.dart';
 

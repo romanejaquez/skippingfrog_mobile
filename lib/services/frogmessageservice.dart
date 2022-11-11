@@ -25,4 +25,15 @@ class FrogMessagesService extends ChangeNotifier {
   void setMessageAndKeepVisible(FrogMessages msg, { String msgContent = ''}) {
     setMessage(msg, msgContent: msgContent, hide: false);
   }
+
+  void resetMessagePanel() {
+    setMessage(FrogMessages.none);
+  }
+
+  void reset() {
+    message = '';
+    hideItself = true;
+    messageType = FrogMessages.none;
+    setMessage(messageType);
+  }
 }

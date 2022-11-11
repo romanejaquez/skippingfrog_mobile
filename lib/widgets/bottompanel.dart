@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/helpers/appcolors.dart';
+import 'package:skippingfrog_mobile/helpers/enums.dart';
 import 'package:skippingfrog_mobile/helpers/skipping_frog_font_icons.dart';
+import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/services/bottompanelservice.dart';
+import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 
 class BottomPanel extends StatefulWidget {
   const BottomPanel({super.key});
@@ -61,16 +64,23 @@ class _BottomPanelState extends State<BottomPanel> with SingleTickerProviderStat
                               clipBehavior: Clip.antiAlias,
                               color: AppColors.gameHeaderIconColors,
                               borderRadius: BorderRadius.circular(50),
-                              child: InkWell(
-                                onTap: () {
-                                  bpService.pauseGame();
-                                },
-                                highlightColor: Colors.white.withOpacity(0.2),
-                                splashColor: Colors.green,
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: const Icon(Icons.pause, color: Colors.black, size: 30),
-                                ),
+
+                              child: Consumer<ScorePanelService>(
+                                builder: (context, scorePanelService, child) {
+                                  return InkWell(
+                                    onTap: () {
+                                      bpService.onPause(context);
+                                    },
+                                    highlightColor: Colors.white.withOpacity(0.2),
+                                    splashColor: Colors.green,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        scorePanelService.isTimePaused ? Icons.play_arrow : Icons.pause, 
+                                        color: Colors.black, size: 30),
+                                    ),
+                                  );
+                                }
                               ),
                             ),
                           ),
@@ -82,7 +92,7 @@ class _BottomPanelState extends State<BottomPanel> with SingleTickerProviderStat
                               borderRadius: BorderRadius.circular(50),
                               child: InkWell(
                                 onTap: () {
-                                  bpService.exitGame();
+                                  bpService.onExitGame(context);
                                 },
                                 highlightColor: Colors.white.withOpacity(0.2),
                                 splashColor: Colors.green,
