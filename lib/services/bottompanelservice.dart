@@ -66,8 +66,11 @@ class BottomPanelService extends ChangeNotifier {
     var swipingGestureService = Provider.of<SwipingGestureService>(context, listen: false);
     var frogMessagesService = Provider.of<FrogMessagesService>(context, listen: false);
     
-    scorePanelService.pauseGame();
-    swipingGestureService.resetSwipeReminder();
+    if (!scorePanelService.isTimePaused) {
+      scorePanelService.isTimePausedForExit = true;
+      scorePanelService.pauseGame();
+      swipingGestureService.resetSwipeReminder();
+    }
     
     Utils.showModalAlertDialog(context,
       title: 'Exit Game',
@@ -78,9 +81,12 @@ class BottomPanelService extends ChangeNotifier {
           exitGame(context);
         }
         else {
-          scorePanelService.unpauseGame();
-          frogMessagesService.resetMessagePanel();
-          swipingGestureService.resetSwipeReminder();
+
+          if (scorePanelService.isTimePaused && scorePanelService.isTimePausedForExit) {
+            scorePanelService.unpauseGame();
+            frogMessagesService.resetMessagePanel();
+            swipingGestureService.resetSwipeReminder();
+          }
         }
       }
     );

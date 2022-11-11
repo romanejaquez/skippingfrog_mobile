@@ -12,6 +12,7 @@ class ScorePanelService extends ChangeNotifier {
     String timeAsString = "00:00:00";
     Duration time = Duration.zero;
     bool isTimePaused = false;
+    bool isTimePausedForExit = false;
 
     void startTime() {
       gameTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -35,6 +36,16 @@ class ScorePanelService extends ChangeNotifier {
       );
     }
 
+    void pauseGameForExit() {
+      isTimePausedForExit = true;
+
+      if (isTimePaused) {
+        return;
+      }
+
+      pauseGame();
+    }
+
     void pauseGame() {
       isTimePaused = true;
 
@@ -47,6 +58,7 @@ class ScorePanelService extends ChangeNotifier {
 
     void unpauseGame() {
       isTimePaused = false;
+      isTimePausedForExit = false;
 
       startTime();
       notifyListeners();
@@ -92,5 +104,6 @@ class ScorePanelService extends ChangeNotifier {
       timeAsString = "00:00:00";
       time = Duration.zero;
       isTimePaused = false;
+      isTimePausedForExit = true;
     }
 }
