@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:provider/provider.dart';
 import 'package:skippingfrog_mobile/firebase_options.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
@@ -117,11 +118,22 @@ class SkippingFrogApp extends StatelessWidget {
         fontFamily: 'Dimitri'
       ),
       builder: (BuildContext context, Widget? child) {
-    
-        // initialize the game service
+        
         GameService gameService = Provider.of<GameService>(context, listen: false);
-        gameService.initGame(context);
-        return child!;
+            
+        if (!gameService.isGameInitialized) {
+          gameService.initGame(context);
+        }
+
+        return FGBGNotifier(
+          child: child!, onEvent: (event) {
+            
+            if (gameService.isGameInitialized && 
+              (event == FGBGType.foreground || event == FGBGType.background)) {
+              gameService.pauseGame(context);
+            }           
+
+          });
       },
       debugShowCheckedModeBanner: false,
       initialRoute: SkippingFrogAppSplash.route,

@@ -44,6 +44,7 @@ dependencies:
   firebase_auth: ^3.11.2
   firebase_crashlytics: ^2.9.0
   icons_launcher: ^2.0.5
+  flutter_fgbg: ^0.2.1
 
 icons_launcher:
   image_path: 'assets/imgs/skippingfrog_icon.png'

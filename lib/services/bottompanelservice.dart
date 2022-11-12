@@ -14,6 +14,7 @@ class BottomPanelService extends ChangeNotifier {
 
   double initialProgressValue = 0;
   double incrementalValue = 0;
+  bool dismissPanel = false;
 
   void advanceToNextLeafProgress() {
     incrementalValue++;
@@ -28,6 +29,8 @@ class BottomPanelService extends ChangeNotifier {
 
   void reset() {
     incrementalValue = 0;
+    initialProgressValue = 0;
+    dismissPanel = false;
   }
 
   void resetValues(int leavesCount) {
@@ -52,7 +55,8 @@ class BottomPanelService extends ChangeNotifier {
         'GAME PAUSED');
     }
     else {
-      frogMessagesService.setMessage(FrogMessages.none);
+      frogMessagesService.setMessage(FrogMessages.simple, msgContent: 
+        'GAME UNPAUSED');
     }
 
     swipingGestureService.resetSwipeReminder();
@@ -90,5 +94,10 @@ class BottomPanelService extends ChangeNotifier {
         }
       }
     );
+  }
+
+  void triggerDismissPanel() {
+    dismissPanel = true;
+    notifyListeners();
   }
 }

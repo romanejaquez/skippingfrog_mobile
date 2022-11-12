@@ -59,7 +59,6 @@ class SwipingGestureService {
     }
     
     direction = d;
-
     var nextLeaf = gameService.leaves[leafRowCount];
 
     if(nextLeaf.direction.name == direction.name) {
@@ -103,6 +102,7 @@ class SwipingGestureService {
 
             audioService.playSound(SkippingFrogSounds.jump, waitForSoundToFinish: true);
             
+            //bottomPanelService.triggerDismissPanel();
             frogJumpingService.makeFinalJump(onFinalJumpDone: () {
               gameService.stopGameClock();
               swipeReminder.cancel();
@@ -114,6 +114,13 @@ class SwipingGestureService {
         });
 
       leafRowCount++;
+
+      // check if the user has won already at the last jump
+      // but do it prematurely (before the frog lands)
+      // and before the sliding animation ends
+      if (leafRowCount == gameService.leaves.length) {
+        bottomPanelService.triggerDismissPanel();
+      }
     }
     else {
       

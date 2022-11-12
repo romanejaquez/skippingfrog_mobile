@@ -32,6 +32,7 @@ class GameService {
   int checkpointValue = 100;
   int bugCount = 0;
   int gameLeafCountShowPond = 9;
+  bool isGameInitialized = false;
 
   // services to query
   late FrogJumpingService frogJumpingService;
@@ -131,6 +132,9 @@ class GameService {
     frogJumpingService.startFrogPosition = startPosition;
     frogJumpingService.endFrogPosition = startPosition;
     bottomPanelService.resetValues(leaves.length);
+
+    // at this point, game has been initialized
+    isGameInitialized = true;
   }
 
   void startGame() {
@@ -155,6 +159,7 @@ class GameService {
   }
 
   void resetGame() {
+    isGameInitialized = false;
     resetServices();
     resetGameFromTheBeginning();
   }
@@ -201,5 +206,9 @@ class GameService {
 
   Future<void> clearAllGameData() async {
     await gameLocalStorage.clearAllGameData();
+  }
+
+  void pauseGame(BuildContext context) {
+    bottomPanelService.onPause(context);
   }
 }
