@@ -107,8 +107,8 @@ class LeaderboardScorePanel extends StatelessWidget {
                                   leaderboardService.reload();
                                   break;
                                 case SkippingFrogSignInOptions.signInWithApple:
-                                  // await loginService.signInWithApple();
-                                  // leaderboardService.reload();
+                                  await loginService.signInWithApple();
+                                  leaderboardService.reload();
                                   break;
                               }
                             }
