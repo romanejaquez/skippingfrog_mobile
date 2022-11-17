@@ -45,6 +45,7 @@ dependencies:
   firebase_crashlytics: ^2.9.0
   icons_launcher: ^2.0.5
   flutter_fgbg: ^0.2.1
+  firebase_app_check: ^0.0.9+1
 
 icons_launcher:
   image_path: 'assets/imgs/skippingfrog_icon.png'
@@ -100,6 +101,9 @@ flutter:
     - family:  Dimitri
       fonts:
         - asset: assets/fonts/dimitri.ttf
+    - family:  SignInIcons
+      fonts:
+        - asset: assets/fonts/SignInIcons.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

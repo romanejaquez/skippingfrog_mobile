@@ -4,3 +4,8 @@ enum AlertOptions {
   no,
   cancel
 }
+
+enum SkippingFrogSignInOptions {
+  signInWithGoogle,
+  signInWithApple
+}

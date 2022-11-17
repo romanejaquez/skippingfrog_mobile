@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/enums.dart';
+import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/models/scoreconfig.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
 import 'package:skippingfrog_mobile/services/leaderboardservice.dart';
 import 'package:skippingfrog_mobile/services/loginservice.dart';
+import 'package:skippingfrog_mobile/widgets/loginoptionspanel.dart';
 
 class LeaderboardScorePanel extends StatelessWidget {
   const LeaderboardScorePanel({super.key});
@@ -91,8 +94,26 @@ class LeaderboardScorePanel extends StatelessWidget {
                     ),
                     onPressed: () async {
                       if (!loginService.isUserLoggedIn()) {
-                        await loginService.signInWithGoogle();
-                        leaderboardService.reload();
+
+                        Utils.showLoginBottomSheet(
+                          context,
+                          LoginOptionsPanel(
+                            onSignIn: (SkippingFrogSignInOptions option) async {
+                              Utils.mainNav.currentState!.pop();
+
+                              switch(option) {
+                                case SkippingFrogSignInOptions.signInWithGoogle:
+                                  await loginService.signInWithGoogle();
+                                  leaderboardService.reload();
+                                  break;
+                                case SkippingFrogSignInOptions.signInWithApple:
+                                  // await loginService.signInWithApple();
+                                  // leaderboardService.reload();
+                                  break;
+                              }
+                            }
+                          )  
+                        );
                       }
                       else {
                         await loginService.signOut(() {});
@@ -102,7 +123,7 @@ class LeaderboardScorePanel extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(
-                        loginService.isUserLoggedIn() ? 'LOGOUT' : 'LOGIN',
+                        loginService.isUserLoggedIn() ? 'SIGN OUT' : 'SIGN IN',
                         style: const TextStyle(fontSize: 15)
                       ),
                     )

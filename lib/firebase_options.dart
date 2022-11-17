@@ -66,4 +66,8 @@ class DefaultFirebaseOptions {
     iosClientId: '422287768695-pc0f9v41tg7t00b5n27glj16fm1vhheh.apps.googleusercontent.com',
     iosBundleId: 'com.drcoderz.skippingfrog',
   );
+
+  static const skippingfrog_ios_debug = 'F5230B69-2A30-4BAE-A75C-7406498A7C3B';
+  static const skippingfrog_android_debug = 'fa280e69-b89d-4458-b615-9316037a5d49';
+  
 }

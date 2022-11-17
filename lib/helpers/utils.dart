@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
-
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -166,5 +167,23 @@ class Utils {
             },
           );
       });
+  }
+
+  static void showLoginBottomSheet(
+    BuildContext context,
+    Widget widget) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context, 
+      builder: (ctx) {
+        return widget;
+      }
+    );
+  }
+
+  static String sha256ofString(String input) {
+    final bytes = utf8.encode(input);
+    final digest = sha256.convert(bytes);
+    return digest.toString();
   }
 }
