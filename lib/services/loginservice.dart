@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:skippingfrog_mobile/helpers/enums.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/models/loginusermodel.dart';
 
@@ -13,34 +14,51 @@ class LoginService extends ChangeNotifier {
 
   Future<bool> signInWithGoogle() async {
     // Trigger the authentication flow
-    GoogleSignIn googleSignIn = GoogleSignIn();
 
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    try {
+      GoogleSignIn googleSignIn = GoogleSignIn();
 
-    if (googleUser == null) {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) {
+        return false;
+      }
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Create a new credential
+      final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      ) as GoogleAuthCredential;
+
+      // Once signed in, return the UserCredential
+      UserCredential userCreds = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      _userModel = LoginUserModel(
+        uid: userCreds.user!.uid,
+        displayName: userCreds.user!.displayName,
+        photoUrl: userCreds.user!.photoURL,
+        email: userCreds.user!.email
+      );
+
+      notifyListeners();
+      return true;
+    }
+    on FirebaseAuthException catch(error) {
+
+      Utils.showModalAlertDialog(
+        title: 'Error during sign-in',
+        message: error.message,
+        options: [AlertOptions.ok],
+        onSelectedAlertOption: () {
+          signOut(() {});
+        }
+      );
+
       return false;
     }
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-    // Create a new credential
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    ) as GoogleAuthCredential;
-
-    // Once signed in, return the UserCredential
-    UserCredential userCreds = await FirebaseAuth.instance.signInWithCredential(credential);
-    _userModel = LoginUserModel(
-      uid: userCreds.user!.uid,
-      displayName: userCreds.user!.displayName,
-      photoUrl: userCreds.user!.photoURL,
-      email: userCreds.user!.email
-    );
-
-    notifyListeners();
-    return true;
   }
 
   Future<bool> signInWithApple() async {
@@ -72,7 +90,7 @@ class LoginService extends ChangeNotifier {
       var displayName = '';
       var email = '';
 
-      if (userCreds.user!.email! != null) {
+      if (userCreds.user!.email != null) {
         email = userCreds.user!.email!;
       }
 
@@ -97,6 +115,8 @@ class LoginService extends ChangeNotifier {
             photoUrl = userCreds.user!.providerData[0].photoURL!;
         }
       }
+
+      
 
       _userModel = LoginUserModel(
         uid: userCreds.user!.uid,

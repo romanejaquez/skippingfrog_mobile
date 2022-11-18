@@ -10,6 +10,7 @@ class GameLocalStorage {
   static const String onboarding = 'onboarding';
   static const String scoreData = 'scoreData';
   static const String muteSounds = 'muteAllSounds';
+  static const String playerName = 'playerName';
 
   late SharedPreferences prefs;
   late BuildContext ctx;
@@ -22,8 +23,8 @@ class GameLocalStorage {
     });
   }
 
-  void saveData() {
-    // save other data
+  void storePlayerName(String player) {
+    prefs.setString(GameLocalStorage.playerName, player);
   }
 
   void toggleMuteSounds(bool mute) {
@@ -37,6 +38,10 @@ class GameLocalStorage {
 
   void neverShowOnboardingAgain() {
     prefs.setBool(GameLocalStorage.onboarding, false);
+  }
+
+  String getPlayerName() {
+    return prefs.getString(GameLocalStorage.playerName) ?? '';
   }
 
   bool isOnboardingSet() {
@@ -64,5 +69,6 @@ class GameLocalStorage {
 
   Future<void> clearAllGameData() async {
     await prefs.remove(GameLocalStorage.scoreData);
+    await prefs.remove(GameLocalStorage.playerName);
   }
 }

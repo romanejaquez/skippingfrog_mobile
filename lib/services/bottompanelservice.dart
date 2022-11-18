@@ -76,11 +76,11 @@ class BottomPanelService extends ChangeNotifier {
       swipingGestureService.resetSwipeReminder();
     }
     
-    Utils.showModalAlertDialog(context,
+    Utils.showModalAlertDialog(
       title: 'Exit Game',
       message: 'Are you sure you want to exit the game?',
       options: [AlertOptions.yes, AlertOptions.no],
-      (AlertOptions selectedOption) {
+      onSelectedAlertOption: (AlertOptions selectedOption) {
         if (selectedOption == AlertOptions.yes) {
           exitGame(context);
         }

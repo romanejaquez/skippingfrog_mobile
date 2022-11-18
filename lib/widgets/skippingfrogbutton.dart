@@ -39,8 +39,8 @@ class _SkippingFrogButtonState extends State<SkippingFrogButton> {
     }
 
     return GestureDetector(
-      onTap: () {
-        audioService.playSound(SkippingFrogSounds.ribbit, waitForSoundToFinish: true);
+      onTap: () async {
+        await audioService.playSound(SkippingFrogSounds.ribbit, waitForSoundToFinish: true);
         widget.onTap();
       },
       onTapDown: (details) {

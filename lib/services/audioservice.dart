@@ -14,7 +14,7 @@ class AudioService {
     ctx = context;
   }
 
-  void playSound(SkippingFrogSounds sound, { bool waitForSoundToFinish = false}) async {
+  Future<void> playSound(SkippingFrogSounds sound, { bool waitForSoundToFinish = false}) async {
 
     GameService gameService = Provider.of<GameService>(ctx, listen: false);
     if (gameService.areAllSoundsMute()) {
@@ -24,11 +24,11 @@ class AudioService {
     if (waitForSoundToFinish) {
       var waitSound = AssetsAudioPlayer();
       audios.add(waitSound);
-      await waitSound.open(Audio('./assets/sounds/${sound.name}.mp3'));
+      await waitSound.open(Audio('/assets/sounds/${sound.name}.mp3'));
       audios.remove(waitSound);
     }
     else {
-       await assetAudio.open(Audio('./assets/sounds/${sound.name}.mp3'));
+       await assetAudio.open(Audio('/assets/sounds/${sound.name}.mp3'));
     }
   }
 

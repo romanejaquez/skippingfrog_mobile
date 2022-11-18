@@ -100,16 +100,27 @@ class LeaderboardScorePanel extends StatelessWidget {
                           LoginOptionsPanel(
                             onSignIn: (SkippingFrogSignInOptions option) async {
                               Utils.mainNav.currentState!.pop();
+                              var signedIn = false;
 
                               switch(option) {
                                 case SkippingFrogSignInOptions.signInWithGoogle:
-                                  await loginService.signInWithGoogle();
-                                  leaderboardService.reload();
+                                  signedIn = await loginService.signInWithGoogle();
                                   break;
                                 case SkippingFrogSignInOptions.signInWithApple:
-                                  await loginService.signInWithApple();
-                                  leaderboardService.reload();
+                                  signedIn = await loginService.signInWithApple();
                                   break;
+                              }
+
+                              if (signedIn && loginService.isUserLoggedIn()) {
+                                gameService.checkForNonRegisteredPlayer(
+                                  loginService.loggedInUserModel!.email!,
+                                  onNonRegisteredUser: () async {
+
+                                    // force them to log out
+                                    await loginService.signOut(() {});
+                                    leaderboardService.reload();
+                                  }
+                                );
                               }
                             }
                           )  

@@ -12,13 +12,15 @@ class BasicAlert extends StatelessWidget {
   final String title;
   final String message;
   final Function onSelectedOption;
+  TextSpan? richMessage;
 
   BasicAlert({
     super.key,
     required this.options,
     required this.title,
     required this.message,
-    required this.onSelectedOption
+    required this.onSelectedOption,
+    required this.richMessage
   });
 
   final ButtonStyle yesBtnStyle = TextButton.styleFrom(
@@ -49,13 +51,16 @@ class BasicAlert extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(title,
-                  style: const TextStyle(color: AppColors.burnedYellow, fontSize: 25)
+                Text(title, textAlign: TextAlign.center,
+                  style: const TextStyle(color: AppColors.burnedYellow, fontSize: 20)
                 ),
                 const SizedBox(height: 10),
-                Text(message,
+                message.isEmpty ? Text.rich(
+                  richMessage!,
+                  textAlign: TextAlign.center,  
+                ) : Text(message,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.black, fontSize: 25)
+                  style: const TextStyle(color: Colors.black, fontSize: 20)
                 ),
                 const SizedBox(height: 30),
                 Row(

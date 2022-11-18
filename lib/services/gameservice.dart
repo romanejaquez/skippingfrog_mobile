@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/appcolors.dart';
+import 'package:skippingfrog_mobile/helpers/enums.dart';
 import 'package:skippingfrog_mobile/helpers/scoretype.dart';
 import 'package:skippingfrog_mobile/helpers/skippingfrogsounds.dart';
 import 'package:skippingfrog_mobile/helpers/utils.dart';
@@ -26,7 +28,7 @@ class GameService {
   int leavesAcrossThePond = 4;
   List<LeafModel> leaves = [];
   double frogDimension = 0;
-  late BuildContext ctx;
+  late BuildContext ctxt;
   int bugScoreValue = 100;
   int lifeScoreValue = 250;
   int checkpointValue = 100;
@@ -47,9 +49,9 @@ class GameService {
   late OptionsService optionsService;
 
   void initGame(BuildContext context) {
-    ctx = context;
-    leafDimension = MediaQuery.of(ctx).size.width * 0.20;
-    frogDimension = MediaQuery.of(ctx).size.width * 0.25;
+    ctxt = context;
+    leafDimension = MediaQuery.of(ctxt).size.width * 0.20;
+    frogDimension = MediaQuery.of(ctxt).size.width * 0.25;
 
     initServices();
     resetGameFromTheBeginning();
@@ -61,26 +63,26 @@ class GameService {
 
   // initialize all service in one single place
   void initServices() {
-    frogJumpingService = Provider.of<FrogJumpingService>(ctx, listen: false);
-    scorePanelService = Provider.of<ScorePanelService>(ctx, listen: false);
-    leafService = Provider.of<LeafService>(ctx, listen: false);
+    frogJumpingService = Provider.of<FrogJumpingService>(ctxt, listen: false);
+    scorePanelService = Provider.of<ScorePanelService>(ctxt, listen: false);
+    leafService = Provider.of<LeafService>(ctxt, listen: false);
 
-    swipingGestureService = Provider.of<SwipingGestureService>(ctx, listen: false);
-    swipingGestureService.initSwipeGestureService(ctx);
+    swipingGestureService = Provider.of<SwipingGestureService>(ctxt, listen: false);
+    swipingGestureService.initSwipeGestureService(ctxt);
 
-    audioService = Provider.of<AudioService>(ctx, listen: false);
-    audioService.init(ctx);
+    audioService = Provider.of<AudioService>(ctxt, listen: false);
+    audioService.init(ctxt);
 
-    pondService = Provider.of<PondService>(ctx, listen: false);
+    pondService = Provider.of<PondService>(ctxt, listen: false);
 
-    bottomPanelService = Provider.of<BottomPanelService>(ctx, listen: false);
-    gameLocalStorage = Provider.of<GameLocalStorage>(ctx, listen: false);
-    gameLocalStorage.init(ctx, () {
-      optionsService = Provider.of<OptionsService>(ctx, listen: false);
-      optionsService.init(ctx);
+    bottomPanelService = Provider.of<BottomPanelService>(ctxt, listen: false);
+    gameLocalStorage = Provider.of<GameLocalStorage>(ctxt, listen: false);
+    gameLocalStorage.init(ctxt, () {
+      optionsService = Provider.of<OptionsService>(ctxt, listen: false);
+      optionsService.init(ctxt);
     });
 
-    frogMessagesService = Provider.of<FrogMessagesService>(ctx, listen: false);
+    frogMessagesService = Provider.of<FrogMessagesService>(ctxt, listen: false);
   }
 
   // reset all provided service
@@ -127,7 +129,7 @@ class GameService {
     bugScoreValue = 100;
     lifeScoreValue = 250;
     bugCount = 0;
-    leaves = Utils.generateGameLeafs(ctx);
+    leaves = Utils.generateGameLeafs(ctxt);
     var startPosition = leaves[0].index.toDouble();
     frogJumpingService.startFrogPosition = startPosition;
     frogJumpingService.endFrogPosition = startPosition;
@@ -212,7 +214,44 @@ class GameService {
     return scorePanelService.isTimePaused;
   }
 
-  void pauseGame(BuildContext context) {
-    bottomPanelService.onPause(context);
+  void pauseGame() {
+    bottomPanelService.onPause(ctxt);
+  }
+
+  void checkForNonRegisteredPlayer(String playerName,
+  { Function? onNonRegisteredUser }) {
+    
+    var storedPlayerName = gameLocalStorage.getPlayerName();
+    
+    if (storedPlayerName.isNotEmpty && playerName != storedPlayerName) {
+      
+      Utils.showModalAlertDialog(
+        title: 'Different Saved Player',
+        richMessage: TextSpan(
+          style: const TextStyle(fontSize: 20, color: Colors.black),
+          children: [
+            const TextSpan(text: 'The player '),
+            TextSpan(text: playerName, style: const TextStyle(color: AppColors.burnedYellow)),
+            const TextSpan(text: ' is different from the stored player '),
+            TextSpan(text: storedPlayerName, style: const TextStyle(color: AppColors.burnedYellow)),
+            const TextSpan(text: '. You cannot submit the score under the new player. Clear the data from the game first before submitting the score under the new player.')
+          ]
+        ),
+        options: [AlertOptions.ok],
+        onSelectedAlertOption: (AlertOptions o) {
+
+          // trigger the callback, because we found out
+          // the stored user is not the same as the one logged in
+          if (onNonRegisteredUser != null) {
+            onNonRegisteredUser();
+          }
+        }
+      );
+    }
+    else {
+      if (storedPlayerName.isEmpty) {
+        gameLocalStorage.storePlayerName(playerName);
+      }
+    }
   }
 }

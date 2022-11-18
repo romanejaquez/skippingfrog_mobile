@@ -145,25 +145,27 @@ class Utils {
     return DateFormat.Hms().format(timeAsDate);
   }
 
-  static void showModalAlertDialog(BuildContext context,
-    Function onSelectedAlertOption,
+  static void showModalAlertDialog(
     { String title = '', 
-      String message = '', 
+      String? message = '',
+      TextSpan? richMessage,
+      Function? onSelectedAlertOption,
       List<AlertOptions> options = const [AlertOptions.ok]
     }
   ) {
         showDialog(
           useSafeArea: true,
           barrierDismissible: false,
-          context: context,
+          context: Utils.mainNav.currentContext!,
           builder: (cxt) {
           
           return BasicAlert(
             title: title,
-            message: message,
+            message: message!,
+            richMessage: richMessage != null ? richMessage : null,
             options: options,
             onSelectedOption: (AlertOptions o) {
-              onSelectedAlertOption(o);
+              onSelectedAlertOption != null ? onSelectedAlertOption(o) : () {};
             },
           );
       });

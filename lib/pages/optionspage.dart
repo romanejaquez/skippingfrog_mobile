@@ -83,11 +83,11 @@ class OptionsPage extends StatelessWidget {
                                         waitForSoundToFinish: true
                                       );
     
-                                      Utils.showModalAlertDialog(context,
+                                      Utils.showModalAlertDialog(
                                         title: 'Clear All Game Data',
                                         message: 'All Game Data stored locally will be wiped out. Are you sure about this?',
                                         options: [AlertOptions.yes, AlertOptions.no],
-                                        (AlertOptions selectedOption) async {
+                                        onSelectedAlertOption: (AlertOptions selectedOption) async {
     
                                           // clear all game data if the user said 'yes'
                                           if (selectedOption == AlertOptions.yes) {

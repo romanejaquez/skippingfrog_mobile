@@ -143,7 +143,7 @@ class SkippingFrogApp extends StatelessWidget {
 
                 // check if game is paused before 
                 if (!gameService.isGamePaused()) {
-                  gameService.pauseGame(context);
+                  gameService.pauseGame();
                 }
               }
             }

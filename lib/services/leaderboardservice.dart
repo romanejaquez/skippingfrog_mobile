@@ -2,9 +2,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/models/playermodel.dart';
 import 'package:skippingfrog_mobile/models/scoreconfig.dart';
-import 'package:skippingfrog_mobile/services/gameservice.dart';
+import 'package:skippingfrog_mobile/services/gamelocalstorage.dart';
 import 'package:skippingfrog_mobile/services/loginservice.dart';
 
 class LeaderboardService extends ChangeNotifier {
@@ -48,17 +49,31 @@ class LeaderboardService extends ChangeNotifier {
   // submit the user score
   Future<void> submitScore(ScoreConfig config, BuildContext context) async {
     LoginService loginService = Provider.of<LoginService>(context, listen: false);
+    GameLocalStorage localStorage = Provider.of<GameLocalStorage>(context, listen: false);
 
-    var userId = loginService.loggedInUserModel!.uid;
-    var playerName = loginService.loggedInUserModel!.email;
+    var userId = loginService.loggedInUserModel!.uid!;
+    var playerName = loginService.loggedInUserModel!.email!;
 
-    await firestore.collection('leaderboard').doc(userId).set({
+    firestore.collection('leaderboard').doc(userId).set({
       'name': playerName,
       'score': config.score,
       'timeInSeconds': config.time.inSeconds
+    }).then((value) {
+      localStorage.storePlayerName(playerName);
+      cachedPlayers.clear();
+      notifyListeners();
+    },
+    onError: (error) {
+      Utils.showModalAlertDialog(
+        title: 'Error saving Score',
+        message: 'There was an issue saving your score. Please Try again'
+      );
+    }).catchError((error) {
+      Utils.showModalAlertDialog(
+        title: 'Error saving Score',
+        message: 'There was an issue saving your score. Please Try again'
+      );
     });
-    cachedPlayers.clear();
-    notifyListeners();
   }
 
   void reload() {
