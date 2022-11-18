@@ -208,6 +208,10 @@ class GameService {
     await gameLocalStorage.clearAllGameData();
   }
 
+   bool isGamePaused() {
+    return scorePanelService.isTimePaused;
+  }
+
   void pauseGame(BuildContext context) {
     bottomPanelService.onPause(context);
   }

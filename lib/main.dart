@@ -113,10 +113,13 @@ class SkippingFrogApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: 
+    [SystemUiOverlay.top]);
     SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
       
     return MaterialApp(
       navigatorKey: Utils.mainNav,
@@ -132,14 +135,20 @@ class SkippingFrogApp extends StatelessWidget {
         }
 
         return FGBGNotifier(
-          child: child!, onEvent: (event) {
+          child: child!,
+          onEvent: (event) {
             
-            if (gameService.isGameInitialized && 
-              (event == FGBGType.foreground || event == FGBGType.background)) {
-              gameService.pauseGame(context);
-            }           
+            if (gameService.isGameInitialized) {
+              if (event == FGBGType.background || event == FGBGType.foreground) {
 
-          });
+                // check if game is paused before 
+                if (!gameService.isGamePaused()) {
+                  gameService.pauseGame(context);
+                }
+              }
+            }
+          }
+        );
       },
       debugShowCheckedModeBanner: false,
       initialRoute: SkippingFrogAppSplash.route,

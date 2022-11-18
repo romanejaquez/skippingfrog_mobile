@@ -122,6 +122,6 @@ class LoginService extends ChangeNotifier {
   }
 
   bool isUserLoggedIn() {
-    return FirebaseAuth.instance.currentUser != null && _userModel != null;
+    return _userModel != null;
   }
 }

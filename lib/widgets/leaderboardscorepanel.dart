@@ -24,7 +24,7 @@ class LeaderboardScorePanel extends StatelessWidget {
         
         return Column(
           children: [
-            loginService.isUserLoggedIn() ? 
+            loginService.isUserLoggedIn() && loginService.loggedInUserModel!.photoUrl != null ? 
             Container(
               width: 50, height: 50,
               decoration: BoxDecoration(

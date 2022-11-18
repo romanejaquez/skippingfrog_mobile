@@ -104,6 +104,6 @@ class ScorePanelService extends ChangeNotifier {
       timeAsString = "00:00:00";
       time = Duration.zero;
       isTimePaused = false;
-      isTimePausedForExit = true;
+      isTimePausedForExit = false;
     }
 }
