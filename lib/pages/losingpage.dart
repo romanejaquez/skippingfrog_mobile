@@ -10,7 +10,7 @@ import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class LosingPage extends StatefulWidget {
 
-  static String route = '/losing';
+  static const String route = '/losing';
 
   const LosingPage({Key? key}) : super(key: key);
 

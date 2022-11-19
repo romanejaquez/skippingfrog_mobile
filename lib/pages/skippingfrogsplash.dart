@@ -5,7 +5,7 @@ import 'package:skippingfrog_mobile/services/loggerservice.dart';
 
 class SkippingFrogAppSplash extends StatefulWidget {
 
-  static String route = '/';
+  static const String route = '/';
   const SkippingFrogAppSplash({Key? key}) : super(key: key);
 
   @override

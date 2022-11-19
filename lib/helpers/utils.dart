@@ -31,7 +31,7 @@ class Utils {
     
     for(var i = 0; i < rows; i++) {
 
-      var isCheckpoint = false; // i != 0 && i % (rows / 10) == 0;
+      var isCheckpoint = i != 0 && i % (rows / 10) == 0;
 
       leaves.add(LeafModel(
         index: randomLeaf.nextInt(4),
@@ -48,8 +48,10 @@ class Utils {
 
   static Duration slidingDuration = const Duration(milliseconds: slidingDurationValue);
 
+  static String currentRoute = '';
+
   static Map<Difficulty, GameConfig> gameConfig = {
-    Difficulty.easy: GameConfig(rows: 10),
+    Difficulty.easy: GameConfig(rows: 100),
     Difficulty.hard: GameConfig(rows: 200),
   };
 
@@ -153,22 +155,22 @@ class Utils {
       List<AlertOptions> options = const [AlertOptions.ok]
     }
   ) {
-        showDialog(
-          useSafeArea: true,
-          barrierDismissible: false,
-          context: Utils.mainNav.currentContext!,
-          builder: (cxt) {
-          
-          return BasicAlert(
-            title: title,
-            message: message!,
-            richMessage: richMessage != null ? richMessage : null,
-            options: options,
-            onSelectedOption: (AlertOptions o) {
-              onSelectedAlertOption != null ? onSelectedAlertOption(o) : () {};
-            },
-          );
-      });
+    showDialog(
+      useSafeArea: true,
+      barrierDismissible: false,
+      context: Utils.mainNav.currentContext!,
+      builder: (cxt) {
+      
+      return BasicAlert(
+          title: title,
+          message: message!,
+          richMessage: richMessage != null ? richMessage : null,
+          options: options,
+          onSelectedOption: (AlertOptions o) {
+            onSelectedAlertOption != null ? onSelectedAlertOption(o) : () {};
+          },
+        );
+    });
   }
 
   static void showLoginBottomSheet(

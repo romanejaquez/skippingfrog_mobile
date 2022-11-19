@@ -13,7 +13,7 @@ import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class OptionsPage extends StatelessWidget {
 
-  static String route = '/options';
+  static const String route = '/options';
 
   const OptionsPage({Key? key}) : super(key: key);
 

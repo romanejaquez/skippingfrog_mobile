@@ -6,7 +6,7 @@ import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class LeaderboardsPage extends StatelessWidget {
 
-  static String route = '/leaderboard';
+  static const String route = '/leaderboard';
 
   const LeaderboardsPage({Key? key}) : super(key: key);
 

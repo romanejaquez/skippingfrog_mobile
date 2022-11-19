@@ -12,7 +12,7 @@ import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class WinningPage extends StatefulWidget {
 
-  static String route = '/winning';
+  static const String route = '/winning';
 
   const WinningPage({Key? key}) : super(key: key);
 

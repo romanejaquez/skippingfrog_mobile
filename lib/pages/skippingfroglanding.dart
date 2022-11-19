@@ -12,7 +12,7 @@ import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class SkippingFrogLanding extends StatefulWidget {
 
-  static String route = '/landing';
+  static const String route = '/landing';
 
   const SkippingFrogLanding({Key? key}) : super(key: key);
 

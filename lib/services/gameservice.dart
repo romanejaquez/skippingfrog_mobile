@@ -162,6 +162,10 @@ class GameService {
 
   void resetGame() {
     isGameInitialized = false;
+
+    // reset the curretn route
+    Utils.currentRoute = '';
+    
     resetServices();
     resetGameFromTheBeginning();
   }

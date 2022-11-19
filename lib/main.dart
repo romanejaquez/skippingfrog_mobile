@@ -129,7 +129,7 @@ class SkippingFrogApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         
         GameService gameService = Provider.of<GameService>(context, listen: false);
-            
+
         if (!gameService.isGameInitialized) {
           gameService.initGame(context);
         }
@@ -138,7 +138,7 @@ class SkippingFrogApp extends StatelessWidget {
           child: child!,
           onEvent: (event) {
             
-            if (gameService.isGameInitialized) {
+            if (Utils.currentRoute == GamePage.route && gameService.isGameInitialized) {
               if (event == FGBGType.background || event == FGBGType.foreground) {
 
                 // check if game is paused before 
@@ -152,16 +152,53 @@ class SkippingFrogApp extends StatelessWidget {
       },
       debugShowCheckedModeBanner: false,
       initialRoute: SkippingFrogAppSplash.route,
-      routes: {
-        SkippingFrogAppSplash.route: (context) => const SkippingFrogAppSplash(),
-        SkippingFrogLanding.route: (context) => const SkippingFrogLanding(),
-        HelpPage.route: (context) => const HelpPage(),
-        OptionsPage.route: (context) => const OptionsPage(),
-        GamePage.route: (context) => const GamePage(),
-        LeaderboardsPage.route: (context) => const LeaderboardsPage(),
-        LosingPage.route: (context) => const LosingPage(),
-        WinningPage.route: (context) => const WinningPage(),
-      },
+      onGenerateRoute: Router.generateRoute,
     );
   }
 }
+
+class Router {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    // store the current route as we navigate to it
+    Utils.currentRoute = settings.name!;
+    late Widget page;
+    switch(settings.name) {
+      case SkippingFrogAppSplash.route: 
+        page = const SkippingFrogAppSplash();
+        break;
+      case SkippingFrogLanding.route:
+        page = const SkippingFrogLanding();
+        break;
+      case HelpPage.route: 
+        page = const HelpPage();
+        break;
+      case OptionsPage.route:
+        page = const OptionsPage();
+        break;
+      case GamePage.route:
+        page = const GamePage();
+        break;
+      case LeaderboardsPage.route:
+        page = const LeaderboardsPage();
+        break;
+      case LosingPage.route:
+        page = const LosingPage();
+        break;
+      case WinningPage.route:
+        page = const WinningPage();
+        break;
+      default:
+        page = Scaffold(
+          body: Center(
+            child: Text('No route defined for ${settings.name}')),
+          );
+        break;
+    }
+
+    return MaterialPageRoute(
+      builder: (context) => page,
+      settings: settings    
+    );
+  }
+}
+

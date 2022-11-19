@@ -5,7 +5,7 @@ import 'package:skippingfrog_mobile/widgets/skippingfrogbutton.dart';
 
 class HelpPage extends StatelessWidget {
 
-  static String route = '/help';
+  static const String route = '/help';
   
   const HelpPage({Key? key}) : super(key: key);
 

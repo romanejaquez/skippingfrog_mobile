@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skippingfrog_mobile/helpers/utils.dart';
 import 'package:skippingfrog_mobile/services/gameservice.dart';
-import 'package:skippingfrog_mobile/services/scorepanelservice.dart';
 import 'package:skippingfrog_mobile/widgets/bottompanel.dart';
 import 'package:skippingfrog_mobile/widgets/frog.dart';
 import 'package:skippingfrog_mobile/widgets/frogmessagepanel.dart';
@@ -13,7 +11,7 @@ import 'package:skippingfrog_mobile/widgets/swipingpanelregion.dart';
 
 class GamePage extends StatefulWidget {
 
-  static String route = '/game';
+  static const String route = '/game';
 
   const GamePage({Key? key}) : super(key: key);
 
@@ -22,6 +20,7 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
+  
   @override
   Widget build(BuildContext context) {
 
