@@ -18,6 +18,8 @@ class Utils {
   static GlobalKey<NavigatorState> mainNav = GlobalKey();
 
   static const int slidingDurationValue = 750;
+  static const int checkPointRow = 10;
+  static const int lifeRandomValue = 5;
   
   static List<LeafModel> generateGameLeafs(BuildContext context) {
 
@@ -31,16 +33,15 @@ class Utils {
     
     for(var i = 0; i < rows; i++) {
 
-      var isCheckpoint = i != 0 && i % (rows / 10) == 0;
+      var isCheckpoint = i != 0 && i % (rows / checkPointRow) == 0;
 
       leaves.add(LeafModel(
         index: randomLeaf.nextInt(4),
         direction: LeafDirection.values[randomLeaf.nextInt(LeafDirection.values.length)],
-        containsBug: randomLeaf.nextInt(rows) % 2 == 0,
+        containsBug: randomLeaf.nextInt(rows) % lifeRandomValue == 0,
         isCheckpoint: isCheckpoint,
-        checkpointValue: isCheckpoint ? i ~/ 10 : -1
+        checkpointValue: isCheckpoint ? i ~/ checkPointRow : -1
       ));
-    
     }
 
     return leaves;
