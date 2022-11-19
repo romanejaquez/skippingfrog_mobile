@@ -115,9 +115,9 @@ class GameService {
         break;
     }
 
-    int additionalLives = scorePanelService.bugs % 5 == 0 ? 1 : 0;
-    if (additionalLives > 0) {
-      audioService.playSound(SkippingFrogSounds.ribbit, waitForSoundToFinish: true);
+    bool giveAdditionalLife = scorePanelService.bugs % Utils.numberOfBugsForLife == 0;
+    if (giveAdditionalLife) {
+      audioService.playSound(SkippingFrogSounds.chimeup, waitForSoundToFinish: true);
       scorePanelService.incrementLives();
       score += lifeScoreValue;
     }

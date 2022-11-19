@@ -20,6 +20,7 @@ class Utils {
   static const int slidingDurationValue = 750;
   static const int checkPointRow = 10;
   static const int lifeRandomValue = 5;
+  static const int numberOfBugsForLife = 5;
   
   static List<LeafModel> generateGameLeafs(BuildContext context) {
 
