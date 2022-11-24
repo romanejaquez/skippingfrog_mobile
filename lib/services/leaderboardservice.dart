@@ -19,7 +19,6 @@ class LeaderboardService extends ChangeNotifier {
 
     if (cachedPlayers.isEmpty) {
       firestore.collection('leaderboard').orderBy('timeInSeconds')
-      //.orderBy('score', descending: true)
       .get().then((playerDocs) {
 
         List<PlayerModel> playersList = playerDocs.docs.map((p) => 

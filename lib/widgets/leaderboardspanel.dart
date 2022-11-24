@@ -25,9 +25,26 @@ class LeaderboardsPanel extends StatelessWidget {
                   displayWidget = const LeaderboardLoading();
                   break;
                 case ConnectionState.done:
-                  displayWidget = LeaderboardList(
-                    players: snapshot.data as List<PlayerModel>
-                  );
+                  if (snapshot.hasData) {
+                    displayWidget = LeaderboardList(
+                      players: snapshot.data as List<PlayerModel>
+                    );
+                  }
+                  else {
+                    displayWidget = Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Icon(Icons.warning_rounded, color: Colors.black, size: 40),
+                          SizedBox(height: 10),
+                          Text('Oops, no players have submitted\ntheir score! Submit yours!',
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      ),
+                    );
+                  }
+
                   break;
                 default:
                   displayWidget = const LeaderboardLoading();
