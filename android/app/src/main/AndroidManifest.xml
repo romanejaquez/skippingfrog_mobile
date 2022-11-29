@@ -1,15 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.drcoderz.skippingfrog">
-    <supports-screens android:smallScreens="false"
-                      android:normalScreens="true"
-                      android:largeScreens="false"
-                      android:xlargeScreens="false"/>
-    <compatible-screens>
-        <!-- all normal size screens -->
-        <screen android:screenSize="normal" android:screenDensity="mdpi" />
-        <screen android:screenSize="normal" android:screenDensity="hdpi" />
-        <screen android:screenSize="normal" android:screenDensity="xhdpi" />
-    </compatible-screens>
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="Skipping Frog"
         android:name="${applicationName}"
