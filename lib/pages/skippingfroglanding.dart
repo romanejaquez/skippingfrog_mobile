@@ -97,7 +97,7 @@ class _SkippingFrogLandingState extends State<SkippingFrogLanding> with SingleTi
                     ).animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
                     child: Image.asset('assets/imgs/skippingfrog_logo.png',
                       width: 300,
-                      height: 250
+                      height: 230
                     ),
                   ),
                 ),

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "422287768695-c3rie6u2td73gghs6obbic0v5criocua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.drcoderz.skippingfrog",
+            "certificate_hash": "8ee17147044b1810ff8740619822b3b91491df43"
+          }
+        },
+        {
           "client_id": "422287768695-i4chbvk352m6trmuodnj38bnkmef817i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

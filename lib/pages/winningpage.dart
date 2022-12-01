@@ -149,7 +149,7 @@ class _WinningPageState extends State<WinningPage> with SingleTickerProviderStat
                         ).animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
                         child: Image.asset('assets/imgs/playagain_win.png',
                           width: 250,
-                          height: 200
+                          height: 180
                         ),
                       ),
                     ),
@@ -161,7 +161,7 @@ class _WinningPageState extends State<WinningPage> with SingleTickerProviderStat
                         .animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
                         child: Image.asset('assets/imgs/frog_win.png',
                           width: 380,
-                          height: 380
+                          height: 360
                         ),
                       ),
                     ),

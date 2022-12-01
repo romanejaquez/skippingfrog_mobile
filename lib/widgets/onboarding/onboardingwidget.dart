@@ -56,7 +56,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
               return Column(
                 children: [
                   SizedBox(
-                    height: 350,
+                    height: 340,
                     width: 300,
                     child: PageView(
                       controller: controller,

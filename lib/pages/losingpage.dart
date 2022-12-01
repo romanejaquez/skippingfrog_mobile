@@ -96,7 +96,7 @@ class _LosingPageState extends State<LosingPage> with SingleTickerProviderStateM
                       ).animate(CurvedAnimation(parent: btnsCtrl, curve: Curves.easeInOut)),
                       child: Image.asset('assets/imgs/playagain_lose.png',
                         width: 300,
-                        height: 250
+                        height: 230
                       ),
                     ),
                   ),
